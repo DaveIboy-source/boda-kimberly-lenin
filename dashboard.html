@@ -8,75 +8,42 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --slate:#3A4A58; --slate-mid:#4E6278;
-  --dusty:#7A9AB8; --dusty-light:#9AAFC5; --dusty-pale:#C8D3DC;
-  --cream:#F7F4F0; --cream-mid:#EEF2F6; --white:#ffffff;
-  --green:#2E7D52; --red:#B94040; --amber:#B87A20;
-  --serif:'Cormorant Garamond',serif; --sans:'Lato',sans-serif;
+  --slate:#3A4A58;--slate-mid:#4E6278;
+  --dusty:#7A9AB8;--dusty-light:#9AAFC5;--dusty-pale:#C8D3DC;
+  --cream:#F7F4F0;--cream-mid:#EEF2F6;--white:#fff;
+  --green:#2E7D52;--red:#B94040;--amber:#B87A20;
+  --serif:'Cormorant Garamond',serif;--sans:'Lato',sans-serif;
 }
 body{background:#F0EDE8;font-family:var(--sans);color:var(--slate);min-height:100vh;}
-
-/* NAV */
-.nav{
-  background:var(--slate);padding:16px 28px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:0.5px solid var(--slate-mid);
-}
-.nav-left{}
+.nav{background:var(--slate);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--slate-mid);}
 .nav-brand{font-family:var(--serif);font-size:20px;color:#fff;font-weight:300;}
 .nav-brand span{font-style:italic;color:var(--dusty-light);}
 .nav-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;}
 .nav-right{display:flex;align-items:center;gap:12px;}
-.nav-status{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;}
-.nav-status.ok{color:#5FA882;}
-.nav-status.err{color:#E07070;}
-.nav-refresh{
-  padding:8px 18px;background:transparent;
-  border:0.5px solid rgba(154,175,197,0.4);
-  color:rgba(255,255,255,0.7);font-family:var(--sans);
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  cursor:pointer;transition:all 0.2s;
-}
+.conn-dot{width:8px;height:8px;border-radius:50%;background:#888;display:inline-block;margin-right:6px;transition:background 0.3s;}
+.conn-dot.ok{background:#5FA882;}
+.conn-dot.err{background:#E07070;}
+.conn-dot.loading{background:#C9A84C;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.conn-label{font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:1px;}
+.nav-refresh{padding:8px 18px;background:transparent;border:0.5px solid rgba(154,175,197,0.4);color:rgba(255,255,255,0.7);font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
 .nav-refresh:hover{background:rgba(255,255,255,0.08);}
-.nav-refresh:disabled{opacity:0.4;cursor:not-allowed;}
+.nav-refresh:disabled{opacity:0.35;cursor:not-allowed;}
 
-/* MAIN */
-.main{max-width:1100px;margin:0 auto;padding:28px 20px;}
+.main{max-width:1100px;margin:0 auto;padding:24px 20px;}
 
-/* STATUS BAR */
-.status-bar{
-  background:var(--white);border:0.5px solid var(--dusty-pale);
-  padding:12px 20px;margin-bottom:20px;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
-}
-.status-bar-left{font-size:11px;color:var(--dusty-light);font-weight:300;}
-.status-bar-left strong{color:var(--slate);font-weight:400;}
-.debug-toggle{
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--dusty-light);cursor:pointer;background:none;border:none;
-  font-family:var(--sans);padding:0;
-}
-.debug-toggle:hover{color:var(--dusty);}
-.debug-panel{
-  display:none;margin-top:10px;padding:10px 12px;
-  background:#EEF2F6;border:0.5px solid #C8D3DC;
-  font-size:11px;color:#4E6278;line-height:1.8;font-family:monospace;
-  border-top:0.5px solid var(--dusty-pale);
-}
+/* SETUP BANNER — visible solo si no hay script URL configurado */
+.setup-banner{background:#FFF8E8;border:0.5px solid #D4AA50;padding:18px 22px;margin-bottom:20px;display:none;}
+.setup-banner h3{font-size:13px;font-weight:700;color:#7A5200;margin-bottom:8px;letter-spacing:0.5px;}
+.setup-banner ol{font-size:12px;color:#7A5200;line-height:2;padding-left:18px;}
+.setup-banner code{background:rgba(0,0,0,0.07);padding:1px 6px;border-radius:2px;font-size:11px;}
 
-/* STATS */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
-.stat-card{
-  background:var(--white);border:0.5px solid var(--dusty-pale);
-  padding:20px;text-align:center;
-}
+.stat-card{background:var(--white);border:0.5px solid var(--dusty-pale);padding:20px;text-align:center;}
 .stat-num{font-family:var(--serif);font-size:48px;font-weight:300;color:var(--slate);line-height:1;}
-.stat-num.green{color:var(--green);}
-.stat-num.red{color:var(--red);}
-.stat-num.amber{color:var(--amber);}
+.stat-num.green{color:var(--green);}.stat-num.red{color:var(--red);}.stat-num.amber{color:var(--amber);}
 .stat-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty-light);margin-top:4px;}
 
-/* CHARTS */
 .charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
 @media(max-width:600px){.charts{grid-template-columns:1fr;}}
 .chart-box{background:var(--white);border:0.5px solid var(--dusty-pale);padding:20px;}
@@ -85,108 +52,107 @@ body{background:#F0EDE8;font-family:var(--sans);color:var(--slate);min-height:10
 .bar-lbl{font-size:12px;font-weight:300;color:var(--slate);min-width:90px;}
 .bar-track{flex:1;height:5px;background:var(--cream-mid);}
 .bar-fill{height:100%;background:var(--dusty);transition:width 0.7s ease;}
-.bar-fill.green{background:#5FA882;}
-.bar-fill.amber{background:#C9A84C;}
+.bar-fill.g{background:#5FA882;}.bar-fill.a{background:#C9A84C;}
 .bar-count{font-size:11px;color:var(--dusty-light);min-width:24px;text-align:right;}
 .food-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;}
 .food-item{background:var(--cream-mid);padding:12px 8px;text-align:center;}
 .food-count{font-family:var(--serif);font-size:30px;font-weight:300;color:var(--slate);}
 .food-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dusty-light);margin-top:2px;}
 
-/* TABLE */
 .table-wrap{background:var(--white);border:0.5px solid var(--dusty-pale);overflow-x:auto;}
-.table-header{
-  padding:14px 20px;border-bottom:0.5px solid var(--dusty-pale);
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
-}
+.table-header{padding:14px 20px;border-bottom:0.5px solid var(--dusty-pale);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .table-title{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty);}
-.search-box{
-  padding:7px 12px;border:0.5px solid var(--dusty-pale);
-  font-family:var(--sans);font-size:13px;color:var(--slate);outline:none;min-width:200px;
-}
+.search-box{padding:7px 12px;border:0.5px solid var(--dusty-pale);font-family:var(--sans);font-size:13px;color:var(--slate);outline:none;min-width:200px;}
 .search-box:focus{border-color:var(--dusty);}
 table{width:100%;border-collapse:collapse;}
-th{
-  padding:10px 14px;background:var(--cream-mid);
-  font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
-  color:var(--dusty-light);text-align:left;border-bottom:0.5px solid var(--dusty-pale);
-  white-space:nowrap;
-}
+th{padding:10px 14px;background:var(--cream-mid);font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--dusty-light);text-align:left;border-bottom:0.5px solid var(--dusty-pale);white-space:nowrap;}
 td{padding:12px 14px;border-bottom:0.5px solid var(--cream-mid);font-size:13px;font-weight:300;color:var(--slate);}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:var(--cream);}
-.status-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;}
-.status-pill.yes{background:#E8F4EE;color:var(--green);}
-.status-pill.no{background:#FAE8E8;color:var(--red);}
-.alerg-warn{color:#B87A20;font-size:12px;}
-.loading-msg{padding:36px;text-align:center;color:var(--dusty-light);font-size:13px;font-weight:300;}
+.pill{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;}
+.pill.yes{background:#E8F4EE;color:var(--green);}.pill.no{background:#FAE8E8;color:var(--red);}
+.warn{color:#B87A20;}
+.state-msg{padding:36px;text-align:center;color:var(--dusty-light);font-size:13px;font-weight:300;}
 .dot{display:inline-block;animation:dotblink 1.2s infinite;margin:0 1px;}
 .dot:nth-child(2){animation-delay:.2s;}.dot:nth-child(3){animation-delay:.4s;}
 @keyframes dotblink{0%,100%{opacity:0.3;}50%{opacity:1;}}
-.empty-msg{padding:40px;text-align:center;color:var(--dusty-light);font-size:13px;font-weight:300;}
 
-/* FOOTER ROW */
 .footer-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
-.export-btn{
-  padding:9px 20px;background:transparent;
-  border:0.5px solid var(--dusty);color:var(--slate-mid);
-  font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;
-  cursor:pointer;transition:background 0.2s;
-}
+.export-btn{padding:9px 20px;background:transparent;border:0.5px solid var(--dusty);color:var(--slate-mid);font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;}
 .export-btn:hover{background:var(--cream-mid);}
-.last-updated{font-size:10px;color:var(--dusty-light);font-weight:300;}
+.last-upd{font-size:10px;color:var(--dusty-light);font-weight:300;}
+
+/* debug */
+.dbg-btn{background:none;border:none;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dusty-light);cursor:pointer;font-family:var(--sans);padding:0;}
+.dbg-btn:hover{color:var(--dusty);}
+.dbg-box{display:none;margin-top:12px;padding:12px;background:var(--cream-mid);border:0.5px solid var(--dusty-pale);font-size:11px;color:var(--slate-mid);line-height:1.8;font-family:monospace;border-radius:0;}
+.info-bar{background:var(--white);border:0.5px solid var(--dusty-pale);padding:12px 20px;margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.info-bar-left{font-size:11px;color:var(--dusty-light);font-weight:300;line-height:1.7;}
+.info-bar-left strong{color:var(--slate);font-weight:400;}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div class="nav-left">
+  <div>
     <div class="nav-brand">Dashboard — <span>Kimberly &amp; Lenin</span></div>
     <div class="nav-badge">Panel de organizadores · 4 Julio 2026</div>
   </div>
   <div class="nav-right">
-    <span class="nav-status" id="connStatus">Conectando…</span>
+    <span><span class="conn-dot loading" id="connDot"></span><span class="conn-label" id="connLabel">Conectando…</span></span>
     <button class="nav-refresh" id="refreshBtn" onclick="loadData()">↻ Actualizar</button>
   </div>
 </nav>
 
 <div class="main">
 
-  <!-- STATUS BAR -->
-  <div class="status-bar">
-    <div class="status-bar-left">
-      Fuente de datos: <strong>DB_Boda_KIM_SQL</strong>
-      &nbsp;·&nbsp; Actualización automática cada 60 seg
+  <!-- SETUP BANNER (visible si falta configurar el Apps Script URL) -->
+  <div class="setup-banner" id="setupBanner">
+    <h3>⚙️ Configuración inicial — 3 minutos</h3>
+    <ol>
+      <li>Abre tu Google Sheet de respuestas → menú <strong>Extensiones → Apps Script</strong></li>
+      <li>Borra el código que hay y pega el contenido del archivo <code>apps-script.js</code></li>
+      <li>Haz clic en <strong>Implementar → Nueva implementación</strong></li>
+      <li>Tipo: <strong>Aplicación web</strong> · Ejecutar como: <strong>Yo</strong> · Acceso: <strong>Cualquier persona</strong></li>
+      <li>Copia la <strong>URL de implementación</strong> que aparece</li>
+      <li>Abre <code>dashboard.html</code>, busca <code>APPS_SCRIPT_URL</code> y reemplaza el valor</li>
+    </ol>
+  </div>
+
+  <!-- INFO BAR -->
+  <div class="info-bar">
+    <div class="info-bar-left">
+      Fuente: <strong>Google Sheets — Datos Boda KIM</strong> &nbsp;·&nbsp; Actualización automática cada <strong>60 seg</strong>
     </div>
-    <button class="debug-toggle" onclick="toggleDebug()">Ver diagnóstico ▾</button>
-    <div class="debug-panel" id="debugPanel"></div>
+    <button class="dbg-btn" onclick="toggleDbg()">Diagnóstico ▾</button>
+    <div class="dbg-box" id="dbgBox"></div>
   </div>
 
   <!-- STATS -->
   <div class="stats">
-    <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-lbl">Respuestas totales</div></div>
-    <div class="stat-card"><div class="stat-num green" id="statYes">—</div><div class="stat-lbl">Confirman asistencia</div></div>
-    <div class="stat-card"><div class="stat-num red" id="statNo">—</div><div class="stat-lbl">No pueden asistir</div></div>
-    <div class="stat-card"><div class="stat-num amber" id="statGuests">—</div><div class="stat-lbl">Total de personas</div></div>
+    <div class="stat-card"><div class="stat-num" id="sTotal">—</div><div class="stat-lbl">Respuestas totales</div></div>
+    <div class="stat-card"><div class="stat-num green" id="sYes">—</div><div class="stat-lbl">Confirman asistencia</div></div>
+    <div class="stat-card"><div class="stat-num red" id="sNo">—</div><div class="stat-lbl">No pueden asistir</div></div>
+    <div class="stat-card"><div class="stat-num amber" id="sGuests">—</div><div class="stat-lbl">Total de personas</div></div>
   </div>
 
   <!-- CHARTS -->
   <div class="charts">
     <div class="chart-box">
       <div class="chart-title">Preferencias de menú (por respuesta)</div>
-      <div class="bar-row"><div class="bar-lbl">Carne</div><div class="bar-track"><div class="bar-fill" id="bar-carne" style="width:0%"></div></div><div class="bar-count" id="cnt-carne">0</div></div>
-      <div class="bar-row"><div class="bar-lbl">Pollo</div><div class="bar-track"><div class="bar-fill green" id="bar-pollo" style="width:0%"></div></div><div class="bar-count" id="cnt-pollo">0</div></div>
-      <div class="bar-row"><div class="bar-lbl">Pescado</div><div class="bar-track"><div class="bar-fill" id="bar-pescado" style="width:0%"></div></div><div class="bar-count" id="cnt-pescado">0</div></div>
-      <div class="bar-row"><div class="bar-lbl">Vegetariano</div><div class="bar-track"><div class="bar-fill amber" id="bar-veg" style="width:0%"></div></div><div class="bar-count" id="cnt-veg">0</div></div>
+      <div class="bar-row"><div class="bar-lbl">Carne</div><div class="bar-track"><div class="bar-fill" id="b-carne" style="width:0"></div></div><div class="bar-count" id="c-carne">0</div></div>
+      <div class="bar-row"><div class="bar-lbl">Pollo</div><div class="bar-track"><div class="bar-fill g" id="b-pollo" style="width:0"></div></div><div class="bar-count" id="c-pollo">0</div></div>
+      <div class="bar-row"><div class="bar-lbl">Pescado</div><div class="bar-track"><div class="bar-fill" id="b-pescado" style="width:0"></div></div><div class="bar-count" id="c-pescado">0</div></div>
+      <div class="bar-row"><div class="bar-lbl">Vegetariano</div><div class="bar-track"><div class="bar-fill a" id="b-veg" style="width:0"></div></div><div class="bar-count" id="c-veg">0</div></div>
     </div>
     <div class="chart-box">
-      <div class="chart-title">Platos totales a preparar (incluyendo acompañantes)</div>
+      <div class="chart-title">Platos a preparar (incluyendo acompañantes)</div>
       <div class="food-grid">
-        <div class="food-item"><div class="food-count" id="food-carne">0</div><div class="food-lbl">Carne</div></div>
-        <div class="food-item"><div class="food-count" id="food-pollo">0</div><div class="food-lbl">Pollo</div></div>
-        <div class="food-item"><div class="food-count" id="food-pescado">0</div><div class="food-lbl">Pescado</div></div>
-        <div class="food-item"><div class="food-count" id="food-veg">0</div><div class="food-lbl">Vegetariano</div></div>
-        <div class="food-item"><div class="food-count" id="food-alergia">0</div><div class="food-lbl">Con alergia</div></div>
+        <div class="food-item"><div class="food-count" id="f-carne">0</div><div class="food-lbl">Carne</div></div>
+        <div class="food-item"><div class="food-count" id="f-pollo">0</div><div class="food-lbl">Pollo</div></div>
+        <div class="food-item"><div class="food-count" id="f-pescado">0</div><div class="food-lbl">Pescado</div></div>
+        <div class="food-item"><div class="food-count" id="f-veg">0</div><div class="food-lbl">Vegetariano</div></div>
+        <div class="food-item"><div class="food-count" id="f-alergia">0</div><div class="food-lbl">Con alergia</div></div>
       </div>
     </div>
   </div>
@@ -195,300 +161,266 @@ tr:hover td{background:var(--cream);}
   <div class="table-wrap">
     <div class="table-header">
       <div class="table-title">Lista de invitados</div>
-      <input class="search-box" type="text" id="searchInput" placeholder="Buscar por nombre…" oninput="filterTable()">
+      <input class="search-box" id="searchBox" type="text" placeholder="Buscar por nombre…" oninput="filterTable()">
     </div>
-    <div class="loading-msg" id="loadingMsg">
-      Cargando datos<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
-    </div>
-    <table id="guestTable" style="display:none;">
-      <thead>
-        <tr>
-          <th>#</th><th>Nombre</th><th>WhatsApp</th><th>Asistencia</th>
-          <th>Acomp.</th><th>Menú</th><th>Alergia</th><th>Canción</th><th>Mensaje</th><th>Fecha</th>
-        </tr>
-      </thead>
-      <tbody id="guestTbody"></tbody>
+    <div class="state-msg" id="stateMsg">Cargando datos<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
+    <table id="gTable" style="display:none;">
+      <thead><tr>
+        <th>#</th><th>Nombre</th><th>WhatsApp</th><th>Asistencia</th>
+        <th>Acomp.</th><th>Menú</th><th>Alergia</th><th>Canción</th><th>Mensaje</th><th>Fecha</th>
+      </tr></thead>
+      <tbody id="gBody"></tbody>
     </table>
-    <div class="empty-msg" id="emptyMsg" style="display:none;">Aún no hay respuestas registradas.</div>
+    <div class="state-msg" id="emptyMsg" style="display:none;">Aún no hay respuestas registradas.</div>
   </div>
 
   <div class="footer-row">
     <button class="export-btn" onclick="exportCSV()">↓ Exportar CSV</button>
-    <div class="last-updated" id="lastUpdated"></div>
+    <div class="last-upd" id="lastUpd"></div>
   </div>
 
-</div><!-- /main -->
+</div>
 
 <script>
-/* ════════════════════════════════════════════════════
-   CONFIGURACIÓN — solo editar esta sección
-   ════════════════════════════════════════════════════ */
-var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrq1JbAvBT2TUSkq8LH4LpIw1LoLrSQ9sIt8YaMB3RK6ecEWR0nr34va3apHP-CTrEo2-EUg_UrbFh/pubhtml?gid=38827500&amp;single=true&amp;widget=true&amp;headers=false"';
-var REFRESH_INTERVAL_SEC = 60; /* actualización automática en segundos */
-/* ════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   CONFIGURACIÓN — pegar aquí el URL del Apps Script
+   ═══════════════════════════════════════════════════════ */
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwJWCBAZJdNKmj43sT1Pckpm65w8offOQFoh_GuOpJF3QiUXxoHiyvTDB4j22Y886E/execI';
+/* ═══════════════════════════════════════════════════════ */
 
-var allCleanRows = [];
-var colMap = {};
+var REFRESH_SEC = 60;
+var allRows = [];
+var colMap  = {};
 
-/* ── CSV tokenizer (maneja comillas, comas y saltos dentro de campos) ── */
-function tokenizeLine(line){
-  var fields=[], cur='', inQ=false;
-  for(var i=0;i<line.length;i++){
-    var c=line[i];
-    if(inQ){
-      if(c==='"'&&line[i+1]==='"'){cur+='"';i++;}
-      else if(c==='"'){inQ=false;}
-      else cur+=c;
-    } else {
-      if(c==='"'){inQ=true;}
-      else if(c===','){fields.push(cur.trim());cur='';}
-      else cur+=c;
-    }
-  }
-  fields.push(cur.trim());
-  return fields;
-}
-
-/* ── Limpia HTML que el proxy pueda inyectar ── */
-function stripHtml(s){
-  return s.replace(/<[^>]*>/g,'')
-          .replace(/&amp;/g,'&').replace(/&lt;/g,'<')
-          .replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
-          .replace(/&#39;/g,"'").replace(/&quot;/g,'"')
-          .trim();
-}
-
-/* ── Detecta tildes → ascii para comparaciones ── */
-function norm(s){
+/* ── Normaliza texto para comparaciones (quita tildes, minúsculas) ── */
+function n(s){
   return (s||'').toLowerCase()
     .replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i')
     .replace(/ó/g,'o').replace(/ú/g,'u').replace(/ñ/g,'n');
 }
 
-/* ── Parsea el CSV completo ── */
-function parseCSV(csv){
-  var lines = csv.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
-
-  /* Encuentra la fila de encabezados: primera con ≥2 celdas de texto real */
-  var headerIdx = 0;
-  for(var i=0;i<Math.min(lines.length,30);i++){
-    var cells = tokenizeLine(lines[i]).map(stripHtml);
-    var textCells = cells.filter(function(c){
-      return c.length>1 && isNaN(Number(c)) && !/^[\{\.<]/.test(c);
-    });
-    if(textCells.length >= 2){ headerIdx=i; break; }
-  }
-
-  var headers = tokenizeLine(lines[headerIdx]).map(stripHtml);
-
-  var rows = [];
-  for(var i=headerIdx+1;i<lines.length;i++){
-    var line=lines[i].trim();
-    if(!line) continue;
-    var cols=tokenizeLine(line).map(stripHtml);
-    /* Saltar filas con ruido HTML/CSS */
-    if(/^[\{\.<]/.test(cols[0]||'')) continue;
-    if(cols.filter(function(c){return c.length>0;}).length<1) continue;
-    var row={};
-    headers.forEach(function(h,j){ row[h]=cols[j]||''; });
-    rows.push(row);
-  }
-  return {headers:headers, rows:rows};
-}
-
-/* ── Detecta automáticamente qué columna es qué ── */
+/* ── Detecta columnas por coincidencia parcial del encabezado ── */
 function detectCols(headers){
-  function find(keywords){
+  function find(kws){
     return headers.find(function(h){
-      var hn=norm(h);
-      return keywords.some(function(k){ return hn.includes(norm(k)); });
-    }) || '';
+      var hn=n(h);
+      return kws.some(function(k){return hn.includes(n(k));});
+    })||'';
   }
   return {
-    timestamp:  find(['marca temporal','timestamp','fecha de']),
-    nombre:     find(['nombre completo','nombre','name']),
-    telefono:   find(['whatsapp','telefono','teléfono','phone','tel']),
-    asistencia: find(['asistir','asistencia','¿asistir','attend']),
-    acomp:      find(['acompanante','acompañante','acomp','personas']),
-    menu:       find(['menu','menú','preferencia de','comida','food']),
-    alergia:    find(['alergi','restriccion','restricción','diet']),
-    cancion:    find(['cancion','canción','song','favorita']),
-    mensaje:    find(['mensaje','message','novios','nota']),
+    ts:    find(['marca temporal','timestamp','fecha de']),
+    nom:   find(['nombre completo','nombre','name']),
+    tel:   find(['whatsapp','telefono','teléfono','phone']),
+    asist: find(['asistir','asistencia','¿asistir','attend']),
+    acomp: find(['acompanante','acompañante','acomp','personas']),
+    menu:  find(['menu','menú','preferencia','comida','food']),
+    alerg: find(['alergi','restriccion','restricción','diet']),
+    canc:  find(['cancion','canción','song','favorita']),
+    msg:   find(['mensaje','message','novios','nota']),
   };
 }
 
-/* ── Carga y renderiza ── */
-function loadData(){
-  var btn=document.getElementById('refreshBtn');
-  btn.disabled=true; btn.textContent='Cargando…';
-  setStatus('Conectando…','');
-
-  /* allorigins.win como proxy CORS gratuito */
-  var proxyUrl='https://api.allorigins.win/get?url='+encodeURIComponent(SHEET_CSV_URL);
-
-  fetch(proxyUrl)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      var csv=data.contents||'';
-      if(!csv){ throw new Error('Respuesta vacía del proxy'); }
-      render(csv);
-      setStatus('● Conectado','ok');
-      document.getElementById('lastUpdated').textContent=
-        'Actualizado: '+new Date().toLocaleTimeString('es-GT');
-    })
-    .catch(function(err){
-      setStatus('✕ Error de conexión','err');
-      document.getElementById('loadingMsg').textContent=
-        'No se pudieron cargar los datos. Verifica tu conexión o que el Sheet esté publicado.';
-      console.error(err);
-    })
-    .finally(function(){
-      btn.disabled=false; btn.textContent='↻ Actualizar';
-    });
+/* ── Estado de conexión ── */
+function setConn(state, label){
+  var dot=document.getElementById('connDot');
+  var lbl=document.getElementById('connLabel');
+  dot.className='conn-dot '+state;
+  lbl.textContent=label;
 }
 
-function render(csv){
-  var parsed=parseCSV(csv);
-  colMap=detectCols(parsed.headers);
+/* ── Carga datos desde Apps Script ── */
+function loadData(){
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL==='PEGAR_URL_DE_APPS_SCRIPT_AQUI'){
+    document.getElementById('setupBanner').style.display='block';
+    document.getElementById('stateMsg').textContent='Configura el Apps Script URL para ver los datos.';
+    setConn('err','Sin configurar');
+    return;
+  }
 
-  /* Filas válidas: deben tener nombre */
-  allCleanRows=parsed.rows.filter(function(r){
-    return (r[colMap.nombre]||'').trim().length>=2;
+  var btn=document.getElementById('refreshBtn');
+  btn.disabled=true; btn.textContent='Cargando…';
+  setConn('loading','Conectando…');
+
+  /* No-CORS no funciona con Apps Script — usamos ?callback= (JSONP) */
+  var cbName='_gsProxy'+Date.now();
+  var script=document.createElement('script');
+  var timer=setTimeout(function(){
+    cleanup();
+    setConn('err','Tiempo de espera agotado');
+    showError('No hubo respuesta del servidor. Verifica que el Apps Script esté publicado correctamente.');
+  },12000);
+
+  window[cbName]=function(data){
+    cleanup();
+    if(data && data.error){
+      setConn('err','Error en el script');
+      showError('El Apps Script devolvió un error: '+data.error);
+      return;
+    }
+    if(!data || !data.rows){
+      setConn('err','Respuesta inesperada');
+      showError('La respuesta no tiene el formato esperado.');
+      return;
+    }
+    render(data.headers, data.rows);
+    setConn('ok','● Conectado');
+    document.getElementById('lastUpd').textContent=
+      'Actualizado: '+new Date().toLocaleTimeString('es-GT');
+    btn.disabled=false; btn.textContent='↻ Actualizar';
+  };
+
+  function cleanup(){
+    clearTimeout(timer);
+    if(script.parentNode) script.parentNode.removeChild(script);
+    delete window[cbName];
+    btn.disabled=false; btn.textContent='↻ Actualizar';
+  }
+
+  /* Añadir callback al URL del Apps Script */
+  script.src=APPS_SCRIPT_URL+(APPS_SCRIPT_URL.includes('?')?'&':'?')+'callback='+cbName;
+  script.onerror=function(){
+    cleanup();
+    setConn('err','Error de red');
+    showError('No se pudo conectar. Verifica que el Apps Script esté publicado con acceso "Cualquier persona".');
+  };
+  document.head.appendChild(script);
+}
+
+function showError(msg){
+  var s=document.getElementById('stateMsg');
+  s.style.display='block';
+  s.textContent='⚠ '+msg;
+  document.getElementById('gTable').style.display='none';
+  document.getElementById('emptyMsg').style.display='none';
+}
+
+/* ── Renderiza todos los datos ── */
+function render(headers, rows){
+  colMap=detectCols(headers);
+
+  /* Filtrar filas válidas (deben tener nombre) */
+  allRows=rows.filter(function(r){
+    return (r[colMap.nom]||'').trim().length>=2;
   });
 
-  /* ── Stats ── */
+  /* ── Estadísticas ── */
   var total=0,yes=0,no=0,guests=0;
-  var menu={carne:0,pollo:0,pescado:0,veg:0};
-  var platos={carne:0,pollo:0,pescado:0,veg:0,alergia:0};
+  var mn={carne:0,pollo:0,pescado:0,veg:0};
+  var pl={carne:0,pollo:0,pescado:0,veg:0,alerg:0};
 
-  allCleanRows.forEach(function(r){
+  allRows.forEach(function(r){
     total++;
-    var asist=norm(r[colMap.asistencia]||'');
+    var asist=n(r[colMap.asist]||'');
     var isYes=asist.includes('si asiste')||asist.includes('con mucho gusto')||
               (asist.includes('si')&&!asist.includes('no'));
     var ac=Math.max(0,parseInt(r[colMap.acomp])||0);
-
     if(isYes){
-      yes++;
-      guests+=1+ac;
-      var m=norm(r[colMap.menu]||'');
-      if(m.includes('carne')){   menu.carne++;  platos.carne+=1+ac;}
-      else if(m.includes('pollo')){menu.pollo++; platos.pollo+=1+ac;}
-      else if(m.includes('pescado')){menu.pescado++;platos.pescado+=1+ac;}
-      else if(m.includes('veg')){ menu.veg++;   platos.veg+=1+ac;}
-      if((r[colMap.alergia]||'').trim().length>2) platos.alergia++;
+      yes++; guests+=1+ac;
+      var m=n(r[colMap.menu]||'');
+      if(m.includes('carne'))        {mn.carne++;  pl.carne+=1+ac;}
+      else if(m.includes('pollo'))   {mn.pollo++;  pl.pollo+=1+ac;}
+      else if(m.includes('pescado')) {mn.pescado++;pl.pescado+=1+ac;}
+      else if(m.includes('veg'))     {mn.veg++;    pl.veg+=1+ac;}
+      if((r[colMap.alerg]||'').trim().length>2) pl.alerg++;
     } else { no++; }
   });
 
-  /* ── Actualizar números ── */
-  document.getElementById('statTotal').textContent=total;
-  document.getElementById('statYes').textContent=yes;
-  document.getElementById('statNo').textContent=no;
-  document.getElementById('statGuests').textContent=guests;
+  /* ── DOM — números ── */
+  document.getElementById('sTotal').textContent=total;
+  document.getElementById('sYes').textContent=yes;
+  document.getElementById('sNo').textContent=no;
+  document.getElementById('sGuests').textContent=guests;
 
-  /* ── Barras de menú ── */
-  var maxM=Math.max(menu.carne,menu.pollo,menu.pescado,menu.veg,1);
-  [['carne',menu.carne],['pollo',menu.pollo],['pescado',menu.pescado],['veg',menu.veg]]
-    .forEach(function(pair){
-      document.getElementById('bar-'+pair[0]).style.width=Math.round(pair[1]/maxM*100)+'%';
-      document.getElementById('cnt-'+pair[0]).textContent=pair[1];
-    });
-
-  /* ── Totales platos ── */
-  document.getElementById('food-carne').textContent=platos.carne;
-  document.getElementById('food-pollo').textContent=platos.pollo;
-  document.getElementById('food-pescado').textContent=platos.pescado;
-  document.getElementById('food-veg').textContent=platos.veg;
-  document.getElementById('food-alergia').textContent=platos.alergia;
+  var maxM=Math.max(mn.carne,mn.pollo,mn.pescado,mn.veg,1);
+  [['carne',mn.carne],['pollo',mn.pollo],['pescado',mn.pescado],['veg',mn.veg]].forEach(function(p){
+    document.getElementById('b-'+p[0]).style.width=Math.round(p[1]/maxM*100)+'%';
+    document.getElementById('c-'+p[0]).textContent=p[1];
+  });
+  ['carne','pollo','pescado','veg'].forEach(function(k){
+    document.getElementById('f-'+k).textContent=pl[k];
+  });
+  document.getElementById('f-alergia').textContent=pl.alerg;
 
   /* ── Tabla ── */
-  renderTable(allCleanRows);
+  renderTable(allRows);
 
   /* ── Debug ── */
-  document.getElementById('debugPanel').innerHTML=
-    '<strong>Encabezados detectados ('+parsed.headers.length+'):</strong> '+
-    parsed.headers.map(function(h){return '<em>'+h+'</em>';}).join(' · ')+'<br>'+
-    '<strong>Mapeo de columnas:</strong> '+
-    Object.entries(colMap).map(function(e){return e[0]+' → <em>'+(e[1]||'—')+'</em>';}).join(' · ')+'<br>'+
-    '<strong>Filas CSV totales:</strong> '+parsed.rows.length+
-    ' &nbsp;|&nbsp; <strong>Filas válidas:</strong> '+allCleanRows.length;
+  document.getElementById('dbgBox').innerHTML=
+    '<strong>Encabezados ('+headers.length+'):</strong> '+
+    headers.map(function(h){return '<em>'+h+'</em>';}).join(' · ')+'<br>'+
+    '<strong>Mapeo:</strong> '+
+    Object.entries(colMap).map(function(e){return e[0]+'→<em>'+(e[1]||'—')+'</em>';}).join(' · ')+'<br>'+
+    '<strong>Filas totales:</strong> '+rows.length+' | <strong>Válidas:</strong> '+allRows.length;
 }
 
-/* ── Tabla ── */
+/* ── Tabla de invitados ── */
 function renderTable(rows){
-  var tbody=document.getElementById('guestTbody');
+  var tbody=document.getElementById('gBody');
   tbody.innerHTML='';
-  document.getElementById('loadingMsg').style.display='none';
+  document.getElementById('stateMsg').style.display='none';
 
   if(!rows.length){
-    document.getElementById('guestTable').style.display='none';
+    document.getElementById('gTable').style.display='none';
     document.getElementById('emptyMsg').style.display='block';
     return;
   }
-  document.getElementById('guestTable').style.display='table';
+  document.getElementById('gTable').style.display='table';
   document.getElementById('emptyMsg').style.display='none';
 
   rows.forEach(function(r,i){
-    var asist=norm(r[colMap.asistencia]||'');
+    var asist=n(r[colMap.asist]||'');
     var isYes=asist.includes('si asiste')||asist.includes('con mucho gusto')||
               (asist.includes('si')&&!asist.includes('no'));
-    var alerg=(r[colMap.alergia]||'').trim();
-    var msg=(r[colMap.mensaje]||'').trim();
+    var alerg=(r[colMap.alerg]||'').trim();
+    var msg=(r[colMap.msg]||'').trim();
     var tr=document.createElement('tr');
-    tr.setAttribute('data-search',norm(r[colMap.nombre]||'')+' '+norm(r[colMap.telefono]||''));
+    tr.setAttribute('data-s', n(r[colMap.nom]||'')+' '+n(r[colMap.tel]||''));
     tr.innerHTML=
       '<td>'+(i+1)+'</td>'+
-      '<td><strong>'+(r[colMap.nombre]||'—')+'</strong></td>'+
-      '<td>'+(r[colMap.telefono]||'—')+'</td>'+
-      '<td><span class="status-pill '+(isYes?'yes':'no')+'">'+(isYes?'✓ Asiste':'✗ No asiste')+'</span></td>'+
+      '<td><strong>'+(r[colMap.nom]||'—')+'</strong></td>'+
+      '<td>'+(r[colMap.tel]||'—')+'</td>'+
+      '<td><span class="pill '+(isYes?'yes':'no')+'">'+(isYes?'✓ Asiste':'✗ No asiste')+'</span></td>'+
       '<td style="text-align:center">'+(r[colMap.acomp]||'0')+'</td>'+
       '<td>'+(r[colMap.menu]||'—')+'</td>'+
-      '<td>'+(alerg.length>1?'<span class="alerg-warn">⚠ '+alerg+'</span>':'—')+'</td>'+
-      '<td>'+(r[colMap.cancion]||'—')+'</td>'+
-      '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+msg+'">'+
-        (msg||'—')+'</td>'+
-      '<td style="white-space:nowrap;font-size:11px;color:#9AAFC5">'+(r[colMap.timestamp]||'—')+'</td>';
+      '<td>'+(alerg.length>1?'<span class="warn">⚠ '+alerg+'</span>':'—')+'</td>'+
+      '<td>'+(r[colMap.canc]||'—')+'</td>'+
+      '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+msg+'">'+(msg||'—')+'</td>'+
+      '<td style="white-space:nowrap;font-size:11px;color:#9AAFC5">'+(r[colMap.ts]||'—')+'</td>';
     tbody.appendChild(tr);
   });
 }
 
 /* ── Búsqueda ── */
 function filterTable(){
-  var q=norm(document.getElementById('searchInput').value);
-  document.getElementById('guestTbody').querySelectorAll('tr').forEach(function(tr){
-    tr.style.display=(tr.getAttribute('data-search')||'').includes(q)?'':'none';
+  var q=n(document.getElementById('searchBox').value);
+  document.getElementById('gBody').querySelectorAll('tr').forEach(function(tr){
+    tr.style.display=(tr.getAttribute('data-s')||'').includes(q)?'':'none';
   });
 }
 
 /* ── Exportar CSV ── */
 function exportCSV(){
-  if(!allCleanRows.length){alert('No hay datos para exportar.');return;}
-  var keys=Object.keys(allCleanRows[0]);
+  if(!allRows.length){alert('No hay datos para exportar.');return;}
+  var keys=Object.keys(allRows[0]);
   var csv=keys.join(',')+'\n';
-  allCleanRows.forEach(function(r){
+  allRows.forEach(function(r){
     csv+=keys.map(function(k){return '"'+(r[k]||'').replace(/"/g,'""')+'"';}).join(',')+'\n';
   });
   var a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}));
-  a.download='rsvp_boda_kimberly_lenin_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.download='rsvp_boda_kimberly_'+new Date().toISOString().slice(0,10)+'.csv';
   a.click();
 }
 
 /* ── Debug toggle ── */
-function toggleDebug(){
-  var p=document.getElementById('debugPanel');
-  p.style.display=p.style.display==='block'?'none':'block';
-}
-
-/* ── Estado de conexión ── */
-function setStatus(msg,cls){
-  var el=document.getElementById('connStatus');
-  el.textContent=msg; el.className='nav-status'+(cls?' '+cls:'');
+function toggleDbg(){
+  var b=document.getElementById('dbgBox');
+  b.style.display=b.style.display==='block'?'none':'block';
 }
 
 /* ── Arranque ── */
 loadData();
-setInterval(loadData, REFRESH_INTERVAL_SEC*1000);
+setInterval(loadData, REFRESH_SEC*1000);
 </script>
 </body>
 </html>
