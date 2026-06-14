@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Boda Kimberly & Lenin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --slate:#3A4A58;
+  --slate-mid:#4E6278;
+  --dusty:#7A9AB8;
+  --dusty-light:#9AAFC5;
+  --dusty-pale:#C8D3DC;
+  --cream:#F7F4F0;
+  --cream-mid:#EEF2F6;
+  --white:#ffffff;
+  --green:#2E7D52;
+  --red:#B94040;
+  --amber:#B87A20;
+  --serif:'Cormorant Garamond',serif;
+  --sans:'Lato',sans-serif;
+}
+body{background:#F0EDE8;font-family:var(--sans);color:var(--slate);min-height:100vh;}
+
+/* ── TOP NAV ── */
+.nav{
+  background:var(--slate);padding:16px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:0.5px solid var(--slate-mid);
+}
+.nav-brand{font-family:var(--serif);font-size:20px;color:#fff;font-weight:300;}
+.nav-brand span{font-style:italic;color:var(--dusty-light);}
+.nav-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+.nav-refresh{
+  padding:8px 16px;background:transparent;border:0.5px solid rgba(154,175,197,0.4);
+  color:rgba(255,255,255,0.7);font-family:var(--sans);font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;transition:all 0.2s;
+}
+.nav-refresh:hover{background:rgba(255,255,255,0.08);}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:1100px;margin:0 auto;padding:28px 20px;}
+
+/* ── CONFIG BOX ── */
+.config-box{
+  background:var(--white);border:0.5px solid var(--dusty-pale);
+  padding:20px 24px;margin-bottom:24px;
+}
+.config-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dusty);margin-bottom:12px;}
+.config-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
+.config-field{flex:1;min-width:260px;}
+.config-field label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dusty-light);margin-bottom:6px;}
+.config-field input{
+  width:100%;padding:9px 12px;border:0.5px solid var(--dusty-pale);
+  font-family:var(--sans);font-size:13px;color:var(--slate);outline:none;
+}
+.config-field input:focus{border-color:var(--dusty);}
+.config-btn{
+  padding:10px 24px;background:var(--slate);border:none;
+  color:#fff;font-family:var(--sans);font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;cursor:pointer;transition:background 0.2s;white-space:nowrap;
+}
+.config-btn:hover{background:var(--slate-mid);}
+.config-note{font-size:11px;color:var(--dusty-light);margin-top:8px;font-weight:300;line-height:1.6;}
+
+/* ── STAT CARDS ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px;}
+.stat-card{
+  background:var(--white);border:0.5px solid var(--dusty-pale);
+  padding:18px 20px;text-align:center;
+}
+.stat-num{font-family:var(--serif);font-size:44px;font-weight:300;color:var(--slate);line-height:1;}
+.stat-num.green{color:var(--green);}
+.stat-num.red{color:var(--red);}
+.stat-num.amber{color:var(--amber);}
+.stat-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty-light);margin-top:4px;}
+
+/* ── CHARTS ROW ── */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+@media(max-width:600px){.charts{grid-template-columns:1fr;}}
+.chart-box{background:var(--white);border:0.5px solid var(--dusty-pale);padding:20px;}
+.chart-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty);margin-bottom:16px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-lbl{font-size:12px;font-weight:300;color:var(--slate);min-width:90px;}
+.bar-track{flex:1;height:6px;background:var(--cream-mid);border-radius:0;}
+.bar-fill{height:100%;background:var(--dusty);border-radius:0;transition:width 0.6s ease;}
+.bar-fill.green{background:#5FA882;}
+.bar-fill.amber{background:#C9A84C;}
+.bar-count{font-size:11px;color:var(--dusty-light);min-width:24px;text-align:right;}
+
+/* ── STATUS PILL ── */
+.status{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:0;}
+.status.yes{background:#E8F4EE;color:var(--green);}
+.status.no{background:#FAE8E8;color:var(--red);}
+
+/* ── GUESTS TABLE ── */
+.table-wrap{background:var(--white);border:0.5px solid var(--dusty-pale);overflow-x:auto;}
+.table-header{
+  padding:16px 20px;border-bottom:0.5px solid var(--dusty-pale);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.table-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty);}
+.search-box{
+  padding:7px 12px;border:0.5px solid var(--dusty-pale);
+  font-family:var(--sans);font-size:13px;color:var(--slate);outline:none;min-width:200px;
+}
+table{width:100%;border-collapse:collapse;}
+th{
+  padding:10px 14px;background:var(--cream-mid);
+  font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;
+  color:var(--dusty-light);text-align:left;border-bottom:0.5px solid var(--dusty-pale);
+  white-space:nowrap;
+}
+td{
+  padding:12px 14px;border-bottom:0.5px solid var(--cream-mid);
+  font-size:13px;font-weight:300;color:var(--slate);
+}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--cream);}
+.empty-msg{padding:40px;text-align:center;color:var(--dusty-light);font-size:13px;font-weight:300;}
+
+/* ── EXPORT BTN ── */
+.export-btn{
+  margin-top:12px;padding:10px 20px;background:transparent;
+  border:0.5px solid var(--dusty);color:var(--slate-mid);
+  font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:background 0.2s;
+}
+.export-btn:hover{background:var(--cream-mid);}
+
+/* ── LOADING ── */
+#loadingState{text-align:center;padding:40px;color:var(--dusty-light);font-size:13px;font-weight:300;}
+.dot{display:inline-block;animation:dotblink 1.2s infinite;margin:0 2px;}
+.dot:nth-child(2){animation-delay:0.2s;}
+.dot:nth-child(3){animation-delay:0.4s;}
+@keyframes dotblink{0%,100%{opacity:0.3;}50%{opacity:1;}}
+
+/* ── LAST UPDATED ── */
+.last-updated{font-size:10px;color:var(--dusty-light);text-align:right;margin-top:8px;font-weight:300;}
+
+/* ── FOOD SUMMARY ── */
+.food-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;}
+.food-item{background:var(--cream-mid);padding:12px;text-align:center;}
+.food-count{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--slate);}
+.food-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dusty-light);margin-top:2px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div>
+    <div class="nav-brand">Dashboard — <span>Kimberly &amp; Lenin</span></div>
+    <div class="nav-badge">Panel de organizadores · 4 Julio 2026</div>
+  </div>
+  <button class="nav-refresh" onclick="loadData()">↻ Actualizar</button>
+</nav>
+
+<div class="main">
+
+  <!-- CONFIG -->
+  <div class="config-box">
+    <div class="config-title">Configuración de Google Sheets</div>
+    <div class="config-row">
+      <div class="config-field">
+        <label>URL pública del Google Sheet (CSV export)</label>
+        <input type="text" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/ID/export?format=csv&gid=0" value="">
+      </div>
+      <button class="config-btn" onclick="saveAndLoad()">Cargar datos</button>
+    </div>
+    <p class="config-note">
+      📋 <strong>Cómo obtener el URL:</strong> Abre tu Google Sheet → Archivo → Compartir → Publicar en la web → selecciona la hoja → formato CSV → Publicar → copia el link.<br>
+      ⏱ Los datos se actualizan automáticamente cada 60 segundos. También puedes hacer clic en "Actualizar".
+    </p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats" id="statsSection">
+    <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-lbl">Respuestas totales</div></div>
+    <div class="stat-card"><div class="stat-num green" id="statYes">—</div><div class="stat-lbl">Confirman asistencia</div></div>
+    <div class="stat-card"><div class="stat-num red" id="statNo">—</div><div class="stat-lbl">No pueden asistir</div></div>
+    <div class="stat-card"><div class="stat-num amber" id="statGuests">—</div><div class="stat-lbl">Total de personas</div></div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts">
+    <div class="chart-box">
+      <div class="chart-title">Preferencias de menú</div>
+      <div id="menuChart">
+        <div class="bar-row"><div class="bar-lbl">Carne</div><div class="bar-track"><div class="bar-fill" id="bar-carne" style="width:0%"></div></div><div class="bar-count" id="cnt-carne">0</div></div>
+        <div class="bar-row"><div class="bar-lbl">Pollo</div><div class="bar-track"><div class="bar-fill green" id="bar-pollo" style="width:0%"></div></div><div class="bar-count" id="cnt-pollo">0</div></div>
+        <div class="bar-row"><div class="bar-lbl">Pescado</div><div class="bar-track"><div class="bar-fill" id="bar-pescado" style="width:0%"></div></div><div class="bar-count" id="cnt-pescado">0</div></div>
+        <div class="bar-row"><div class="bar-lbl">Vegetariano</div><div class="bar-track"><div class="bar-fill amber" id="bar-veg" style="width:0%"></div></div><div class="bar-count" id="cnt-veg">0</div></div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Totales por menú (personas)</div>
+      <div class="food-grid" id="foodGrid">
+        <div class="food-item"><div class="food-count" id="food-carne">0</div><div class="food-lbl">Carne</div></div>
+        <div class="food-item"><div class="food-count" id="food-pollo">0</div><div class="food-lbl">Pollo</div></div>
+        <div class="food-item"><div class="food-count" id="food-pescado">0</div><div class="food-lbl">Pescado</div></div>
+        <div class="food-item"><div class="food-count" id="food-veg">0</div><div class="food-lbl">Vegetariano</div></div>
+        <div class="food-item"><div class="food-count" id="food-alergia">0</div><div class="food-lbl">Con alergia</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <div class="table-header">
+      <div class="table-title">Lista de invitados</div>
+      <input class="search-box" type="text" id="searchInput" placeholder="Buscar por nombre…" oninput="filterTable()">
+    </div>
+    <div id="loadingState">Ingresa el URL de tu Google Sheet para cargar los datos<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
+    <table id="guestTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>WhatsApp</th>
+          <th>Asistencia</th>
+          <th>Acomp.</th>
+          <th>Menú</th>
+          <th>Alergia</th>
+          <th>Canción</th>
+          <th>Mensaje</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="guestTbody"></tbody>
+    </table>
+    <div id="emptyState" class="empty-msg" style="display:none;">No se encontraron respuestas aún.</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+    <button class="export-btn" onclick="exportCSV()">↓ Exportar CSV</button>
+    <div class="last-updated" id="lastUpdated"></div>
+  </div>
+
+</div>
+
+<script>
+var allRows = [];
+var sheetCsvUrl = localStorage.getItem('weddingSheetUrl') || '';
+
+/* Restore saved URL */
+if(sheetCsvUrl) document.getElementById('sheetUrl').value = sheetCsvUrl;
+
+function saveAndLoad(){
+  sheetCsvUrl = document.getElementById('sheetUrl').value.trim();
+  if(!sheetCsvUrl){alert('Por favor ingresa el URL del Google Sheet.');return;}
+  localStorage.setItem('weddingSheetUrl', sheetCsvUrl);
+  loadData();
+}
+
+function loadData(){
+  if(!sheetCsvUrl){
+    document.getElementById('loadingState').innerHTML='Ingresa el URL de tu Google Sheet arriba y haz clic en "Cargar datos".';
+    return;
+  }
+  document.getElementById('loadingState').style.display='block';
+  document.getElementById('loadingState').innerHTML='Cargando datos<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+  document.getElementById('guestTable').style.display='none';
+  document.getElementById('emptyState').style.display='none';
+
+  /* Use a CORS proxy to fetch the public CSV */
+  var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent(sheetCsvUrl);
+  fetch(url)
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var csv = data.contents;
+      parseAndRender(csv);
+    })
+    .catch(function(err){
+      document.getElementById('loadingState').innerHTML='Error al cargar los datos. Verifica que el Sheet esté publicado y el URL sea correcto.';
+      console.error(err);
+    });
+}
+
+function parseCSV(csv){
+  var lines = csv.trim().split('\n');
+  var headers = lines[0].split(',').map(function(h){return h.trim().replace(/"/g,'');});
+  var rows = [];
+  for(var i=1;i<lines.length;i++){
+    var cols = lines[i].match(/(".*?"|[^",\n]+)(?=,|\n|$)/g)||[];
+    var row = {};
+    headers.forEach(function(h,j){
+      row[h] = (cols[j]||'').replace(/^"|"$/g,'').trim();
+    });
+    rows.push(row);
+  }
+  return {headers:headers, rows:rows};
+}
+
+function parseAndRender(csv){
+  var parsed = parseCSV(csv);
+  allRows = parsed.rows;
+
+  /* Try to auto-detect columns */
+  var colMap = autoDetectCols(parsed.headers);
+
+  /* Stats */
+  var total=allRows.length, yes=0, no=0, guests=0;
+  var menu={carne:0,pollo:0,pescado:0,vegetariano:0};
+  var foodTotal={carne:0,pollo:0,pescado:0,vegetariano:0,alergia:0};
+
+  allRows.forEach(function(r){
+    var asist = (r[colMap.asistencia]||'').toLowerCase();
+    var isYes = asist.includes('sí') || asist.includes('si') || asist.includes('yes');
+    if(isYes){ yes++;
+      var ac = parseInt(r[colMap.acomp]||'0')||0;
+      guests += 1+ac;
+      var m = (r[colMap.menu]||'').toLowerCase();
+      if(m.includes('carne')){menu.carne++;foodTotal.carne+=1+ac;}
+      else if(m.includes('pollo')){menu.pollo++;foodTotal.pollo+=1+ac;}
+      else if(m.includes('pescado')){menu.pescado++;foodTotal.pescado+=1+ac;}
+      else if(m.includes('veg')){menu.vegetariano++;foodTotal.vegetariano+=1+ac;}
+      if(r[colMap.alergia] && r[colMap.alergia].length>2) foodTotal.alergia++;
+    } else { no++; }
+  });
+
+  /* Update stats */
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statYes').textContent=yes;
+  document.getElementById('statNo').textContent=no;
+  document.getElementById('statGuests').textContent=guests;
+
+  /* Update charts */
+  var maxMenu=Math.max(menu.carne,menu.pollo,menu.pescado,menu.vegetariano,1);
+  ['carne','pollo','pescado'].forEach(function(k){
+    document.getElementById('bar-'+k).style.width=Math.round(menu[k]/maxMenu*100)+'%';
+    document.getElementById('cnt-'+k).textContent=menu[k];
+  });
+  document.getElementById('bar-veg').style.width=Math.round(menu.vegetariano/maxMenu*100)+'%';
+  document.getElementById('cnt-veg').textContent=menu.vegetariano;
+
+  document.getElementById('food-carne').textContent=foodTotal.carne;
+  document.getElementById('food-pollo').textContent=foodTotal.pollo;
+  document.getElementById('food-pescado').textContent=foodTotal.pescado;
+  document.getElementById('food-veg').textContent=foodTotal.vegetariano;
+  document.getElementById('food-alergia').textContent=foodTotal.alergia;
+
+  /* Render table */
+  renderTable(allRows, colMap);
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('lastUpdated').textContent='Actualizado: '+new Date().toLocaleTimeString('es-GT');
+}
+
+function autoDetectCols(headers){
+  function find(keywords){
+    var h=headers.find(function(h){return keywords.some(function(k){return h.toLowerCase().includes(k);});});
+    return h||'';
+  }
+  return {
+    timestamp: find(['timestamp','fecha','time']),
+    nombre: find(['nombre','name']),
+    telefono: find(['tel','phone','whatsapp']),
+    asistencia: find(['asist','attend']),
+    acomp: find(['acomp','compañ','guest']),
+    menu: find(['men','food','comid']),
+    alergia: find(['alergi','restrict','diet']),
+    cancion: find(['canci','song','música']),
+    mensaje: find(['mensaje','message','nota']),
+  };
+}
+
+function renderTable(rows, colMap){
+  var tbody=document.getElementById('guestTbody');
+  tbody.innerHTML='';
+  if(!rows.length){
+    document.getElementById('guestTable').style.display='none';
+    document.getElementById('emptyState').style.display='block';
+    return;
+  }
+  document.getElementById('guestTable').style.display='table';
+  document.getElementById('emptyState').style.display='none';
+
+  rows.forEach(function(r,i){
+    var asist=(r[colMap.asistencia]||'').toLowerCase();
+    var isYes=asist.includes('sí')||asist.includes('si')||asist.includes('yes');
+    var tr=document.createElement('tr');
+    tr.innerHTML=
+      '<td>'+(i+1)+'</td>'+
+      '<td><strong>'+(r[colMap.nombre]||'—')+'</strong></td>'+
+      '<td>'+(r[colMap.telefono]||'—')+'</td>'+
+      '<td><span class="status '+(isYes?'yes':'no')+'">'+(isYes?'✓ Asiste':'✗ No asiste')+'</span></td>'+
+      '<td style="text-align:center">'+(r[colMap.acomp]||'0')+'</td>'+
+      '<td>'+(r[colMap.menu]||'—')+'</td>'+
+      '<td>'+(r[colMap.alergia]||'—')+'</td>'+
+      '<td>'+(r[colMap.cancion]||'—')+'</td>'+
+      '<td>'+(r[colMap.mensaje]||'—')+'</td>'+
+      '<td style="white-space:nowrap;font-size:11px;color:#9AAFC5">'+(r[colMap.timestamp]||'—')+'</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function filterTable(){
+  var q=document.getElementById('searchInput').value.toLowerCase();
+  var rows=document.getElementById('guestTbody').querySelectorAll('tr');
+  rows.forEach(function(tr){
+    tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none';
+  });
+}
+
+function exportCSV(){
+  if(!allRows.length){alert('No hay datos para exportar.');return;}
+  var keys=Object.keys(allRows[0]);
+  var csv=keys.join(',')+'\n';
+  allRows.forEach(function(r){
+    csv+=keys.map(function(k){return '"'+(r[k]||'').replace(/"/g,'""')+'"';}).join(',')+'\n';
+  });
+  var blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+  var link=document.createElement('a');
+  link.href=URL.createObjectURL(blob);
+  link.download='rsvp_boda_kimberly_lenin.csv';
+  link.click();
+}
+
+/* Auto-refresh every 60 seconds */
+setInterval(function(){if(sheetCsvUrl)loadData();},60000);
+
+/* Initial load if URL saved */
+if(sheetCsvUrl) loadData();
+</script>
+
+</body>
+</html>
