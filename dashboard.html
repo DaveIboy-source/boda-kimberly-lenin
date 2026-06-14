@@ -6,107 +6,105 @@
 <title>Dashboard — Boda Kimberly & Lenin</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-/* ── RESET ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --slate:#3A4A58;
-  --slate-mid:#4E6278;
-  --dusty:#7A9AB8;
-  --dusty-light:#9AAFC5;
-  --dusty-pale:#C8D3DC;
-  --cream:#F7F4F0;
-  --cream-mid:#EEF2F6;
-  --white:#ffffff;
-  --green:#2E7D52;
-  --red:#B94040;
-  --amber:#B87A20;
-  --serif:'Cormorant Garamond',serif;
-  --sans:'Lato',sans-serif;
+  --slate:#3A4A58; --slate-mid:#4E6278;
+  --dusty:#7A9AB8; --dusty-light:#9AAFC5; --dusty-pale:#C8D3DC;
+  --cream:#F7F4F0; --cream-mid:#EEF2F6; --white:#ffffff;
+  --green:#2E7D52; --red:#B94040; --amber:#B87A20;
+  --serif:'Cormorant Garamond',serif; --sans:'Lato',sans-serif;
 }
 body{background:#F0EDE8;font-family:var(--sans);color:var(--slate);min-height:100vh;}
 
-/* ── TOP NAV ── */
+/* NAV */
 .nav{
   background:var(--slate);padding:16px 28px;
   display:flex;align-items:center;justify-content:space-between;
   border-bottom:0.5px solid var(--slate-mid);
 }
+.nav-left{}
 .nav-brand{font-family:var(--serif);font-size:20px;color:#fff;font-weight:300;}
 .nav-brand span{font-style:italic;color:var(--dusty-light);}
-.nav-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+.nav-badge{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-status{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;}
+.nav-status.ok{color:#5FA882;}
+.nav-status.err{color:#E07070;}
 .nav-refresh{
-  padding:8px 16px;background:transparent;border:0.5px solid rgba(154,175,197,0.4);
-  color:rgba(255,255,255,0.7);font-family:var(--sans);font-size:10px;letter-spacing:2px;
-  text-transform:uppercase;cursor:pointer;transition:all 0.2s;
+  padding:8px 18px;background:transparent;
+  border:0.5px solid rgba(154,175,197,0.4);
+  color:rgba(255,255,255,0.7);font-family:var(--sans);
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;transition:all 0.2s;
 }
 .nav-refresh:hover{background:rgba(255,255,255,0.08);}
+.nav-refresh:disabled{opacity:0.4;cursor:not-allowed;}
 
-/* ── MAIN LAYOUT ── */
+/* MAIN */
 .main{max-width:1100px;margin:0 auto;padding:28px 20px;}
 
-/* ── CONFIG BOX ── */
-.config-box{
+/* STATUS BAR */
+.status-bar{
   background:var(--white);border:0.5px solid var(--dusty-pale);
-  padding:20px 24px;margin-bottom:24px;
+  padding:12px 20px;margin-bottom:20px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
 }
-.config-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--dusty);margin-bottom:12px;}
-.config-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
-.config-field{flex:1;min-width:260px;}
-.config-field label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dusty-light);margin-bottom:6px;}
-.config-field input{
-  width:100%;padding:9px 12px;border:0.5px solid var(--dusty-pale);
-  font-family:var(--sans);font-size:13px;color:var(--slate);outline:none;
+.status-bar-left{font-size:11px;color:var(--dusty-light);font-weight:300;}
+.status-bar-left strong{color:var(--slate);font-weight:400;}
+.debug-toggle{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--dusty-light);cursor:pointer;background:none;border:none;
+  font-family:var(--sans);padding:0;
 }
-.config-field input:focus{border-color:var(--dusty);}
-.config-btn{
-  padding:10px 24px;background:var(--slate);border:none;
-  color:#fff;font-family:var(--sans);font-size:10px;letter-spacing:3px;
-  text-transform:uppercase;cursor:pointer;transition:background 0.2s;white-space:nowrap;
+.debug-toggle:hover{color:var(--dusty);}
+.debug-panel{
+  display:none;margin-top:10px;padding:10px 12px;
+  background:#EEF2F6;border:0.5px solid #C8D3DC;
+  font-size:11px;color:#4E6278;line-height:1.8;font-family:monospace;
+  border-top:0.5px solid var(--dusty-pale);
 }
-.config-btn:hover{background:var(--slate-mid);}
-.config-note{font-size:11px;color:var(--dusty-light);margin-top:8px;font-weight:300;line-height:1.6;}
 
-/* ── STAT CARDS ── */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px;}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
 .stat-card{
   background:var(--white);border:0.5px solid var(--dusty-pale);
-  padding:18px 20px;text-align:center;
+  padding:20px;text-align:center;
 }
-.stat-num{font-family:var(--serif);font-size:44px;font-weight:300;color:var(--slate);line-height:1;}
+.stat-num{font-family:var(--serif);font-size:48px;font-weight:300;color:var(--slate);line-height:1;}
 .stat-num.green{color:var(--green);}
 .stat-num.red{color:var(--red);}
 .stat-num.amber{color:var(--amber);}
 .stat-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty-light);margin-top:4px;}
 
-/* ── CHARTS ROW ── */
-.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+/* CHARTS */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
 @media(max-width:600px){.charts{grid-template-columns:1fr;}}
 .chart-box{background:var(--white);border:0.5px solid var(--dusty-pale);padding:20px;}
-.chart-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty);margin-bottom:16px;}
+.chart-title{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty);margin-bottom:16px;}
 .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .bar-lbl{font-size:12px;font-weight:300;color:var(--slate);min-width:90px;}
-.bar-track{flex:1;height:6px;background:var(--cream-mid);border-radius:0;}
-.bar-fill{height:100%;background:var(--dusty);border-radius:0;transition:width 0.6s ease;}
+.bar-track{flex:1;height:5px;background:var(--cream-mid);}
+.bar-fill{height:100%;background:var(--dusty);transition:width 0.7s ease;}
 .bar-fill.green{background:#5FA882;}
 .bar-fill.amber{background:#C9A84C;}
 .bar-count{font-size:11px;color:var(--dusty-light);min-width:24px;text-align:right;}
+.food-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;}
+.food-item{background:var(--cream-mid);padding:12px 8px;text-align:center;}
+.food-count{font-family:var(--serif);font-size:30px;font-weight:300;color:var(--slate);}
+.food-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dusty-light);margin-top:2px;}
 
-/* ── STATUS PILL ── */
-.status{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:0;}
-.status.yes{background:#E8F4EE;color:var(--green);}
-.status.no{background:#FAE8E8;color:var(--red);}
-
-/* ── GUESTS TABLE ── */
+/* TABLE */
 .table-wrap{background:var(--white);border:0.5px solid var(--dusty-pale);overflow-x:auto;}
 .table-header{
-  padding:16px 20px;border-bottom:0.5px solid var(--dusty-pale);
+  padding:14px 20px;border-bottom:0.5px solid var(--dusty-pale);
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
 }
-.table-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty);}
+.table-title{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dusty);}
 .search-box{
   padding:7px 12px;border:0.5px solid var(--dusty-pale);
   font-family:var(--sans);font-size:13px;color:var(--slate);outline:none;min-width:200px;
 }
+.search-box:focus{border-color:var(--dusty);}
 table{width:100%;border-collapse:collapse;}
 th{
   padding:10px 14px;background:var(--cream-mid);
@@ -114,70 +112,58 @@ th{
   color:var(--dusty-light);text-align:left;border-bottom:0.5px solid var(--dusty-pale);
   white-space:nowrap;
 }
-td{
-  padding:12px 14px;border-bottom:0.5px solid var(--cream-mid);
-  font-size:13px;font-weight:300;color:var(--slate);
-}
+td{padding:12px 14px;border-bottom:0.5px solid var(--cream-mid);font-size:13px;font-weight:300;color:var(--slate);}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:var(--cream);}
+.status-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;}
+.status-pill.yes{background:#E8F4EE;color:var(--green);}
+.status-pill.no{background:#FAE8E8;color:var(--red);}
+.alerg-warn{color:#B87A20;font-size:12px;}
+.loading-msg{padding:36px;text-align:center;color:var(--dusty-light);font-size:13px;font-weight:300;}
+.dot{display:inline-block;animation:dotblink 1.2s infinite;margin:0 1px;}
+.dot:nth-child(2){animation-delay:.2s;}.dot:nth-child(3){animation-delay:.4s;}
+@keyframes dotblink{0%,100%{opacity:0.3;}50%{opacity:1;}}
 .empty-msg{padding:40px;text-align:center;color:var(--dusty-light);font-size:13px;font-weight:300;}
 
-/* ── EXPORT BTN ── */
+/* FOOTER ROW */
+.footer-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
 .export-btn{
-  margin-top:12px;padding:10px 20px;background:transparent;
+  padding:9px 20px;background:transparent;
   border:0.5px solid var(--dusty);color:var(--slate-mid);
   font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;
   cursor:pointer;transition:background 0.2s;
 }
 .export-btn:hover{background:var(--cream-mid);}
-
-/* ── LOADING ── */
-#loadingState{text-align:center;padding:40px;color:var(--dusty-light);font-size:13px;font-weight:300;}
-.dot{display:inline-block;animation:dotblink 1.2s infinite;margin:0 2px;}
-.dot:nth-child(2){animation-delay:0.2s;}
-.dot:nth-child(3){animation-delay:0.4s;}
-@keyframes dotblink{0%,100%{opacity:0.3;}50%{opacity:1;}}
-
-/* ── LAST UPDATED ── */
-.last-updated{font-size:10px;color:var(--dusty-light);text-align:right;margin-top:8px;font-weight:300;}
-
-/* ── FOOD SUMMARY ── */
-.food-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;}
-.food-item{background:var(--cream-mid);padding:12px;text-align:center;}
-.food-count{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--slate);}
-.food-lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dusty-light);margin-top:2px;}
+.last-updated{font-size:10px;color:var(--dusty-light);font-weight:300;}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <div>
+  <div class="nav-left">
     <div class="nav-brand">Dashboard — <span>Kimberly &amp; Lenin</span></div>
     <div class="nav-badge">Panel de organizadores · 4 Julio 2026</div>
   </div>
-  <button class="nav-refresh" onclick="loadData()">↻ Actualizar</button>
+  <div class="nav-right">
+    <span class="nav-status" id="connStatus">Conectando…</span>
+    <button class="nav-refresh" id="refreshBtn" onclick="loadData()">↻ Actualizar</button>
+  </div>
 </nav>
 
 <div class="main">
 
-  <!-- CONFIG -->
-  <div class="config-box">
-    <div class="config-title">Configuración de Google Sheets</div>
-    <div class="config-row">
-      <div class="config-field">
-        <label>URL pública del Google Sheet (CSV export)</label>
-        <input type="text" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/ID/export?format=csv&gid=0" value="">
-      </div>
-      <button class="config-btn" onclick="saveAndLoad()">Cargar datos</button>
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-bar-left">
+      Fuente de datos: <strong>Google Sheets — Datos Boda KIM</strong>
+      &nbsp;·&nbsp; Actualización automática cada 60 seg
     </div>
-    <p class="config-note">
-      📋 <strong>Cómo obtener el URL:</strong> Abre tu Google Sheet → Archivo → Compartir → Publicar en la web → selecciona la hoja → formato CSV → Publicar → copia el link.<br>
-      ⏱ Los datos se actualizan automáticamente cada 60 segundos. También puedes hacer clic en "Actualizar".
-    </p>
+    <button class="debug-toggle" onclick="toggleDebug()">Ver diagnóstico ▾</button>
+    <div class="debug-panel" id="debugPanel"></div>
   </div>
 
   <!-- STATS -->
-  <div class="stats" id="statsSection">
+  <div class="stats">
     <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-lbl">Respuestas totales</div></div>
     <div class="stat-card"><div class="stat-num green" id="statYes">—</div><div class="stat-lbl">Confirman asistencia</div></div>
     <div class="stat-card"><div class="stat-num red" id="statNo">—</div><div class="stat-lbl">No pueden asistir</div></div>
@@ -187,17 +173,15 @@ tr:hover td{background:var(--cream);}
   <!-- CHARTS -->
   <div class="charts">
     <div class="chart-box">
-      <div class="chart-title">Preferencias de menú</div>
-      <div id="menuChart">
-        <div class="bar-row"><div class="bar-lbl">Carne</div><div class="bar-track"><div class="bar-fill" id="bar-carne" style="width:0%"></div></div><div class="bar-count" id="cnt-carne">0</div></div>
-        <div class="bar-row"><div class="bar-lbl">Pollo</div><div class="bar-track"><div class="bar-fill green" id="bar-pollo" style="width:0%"></div></div><div class="bar-count" id="cnt-pollo">0</div></div>
-        <div class="bar-row"><div class="bar-lbl">Pescado</div><div class="bar-track"><div class="bar-fill" id="bar-pescado" style="width:0%"></div></div><div class="bar-count" id="cnt-pescado">0</div></div>
-        <div class="bar-row"><div class="bar-lbl">Vegetariano</div><div class="bar-track"><div class="bar-fill amber" id="bar-veg" style="width:0%"></div></div><div class="bar-count" id="cnt-veg">0</div></div>
-      </div>
+      <div class="chart-title">Preferencias de menú (por respuesta)</div>
+      <div class="bar-row"><div class="bar-lbl">Carne</div><div class="bar-track"><div class="bar-fill" id="bar-carne" style="width:0%"></div></div><div class="bar-count" id="cnt-carne">0</div></div>
+      <div class="bar-row"><div class="bar-lbl">Pollo</div><div class="bar-track"><div class="bar-fill green" id="bar-pollo" style="width:0%"></div></div><div class="bar-count" id="cnt-pollo">0</div></div>
+      <div class="bar-row"><div class="bar-lbl">Pescado</div><div class="bar-track"><div class="bar-fill" id="bar-pescado" style="width:0%"></div></div><div class="bar-count" id="cnt-pescado">0</div></div>
+      <div class="bar-row"><div class="bar-lbl">Vegetariano</div><div class="bar-track"><div class="bar-fill amber" id="bar-veg" style="width:0%"></div></div><div class="bar-count" id="cnt-veg">0</div></div>
     </div>
     <div class="chart-box">
-      <div class="chart-title">Totales por menú (personas)</div>
-      <div class="food-grid" id="foodGrid">
+      <div class="chart-title">Platos totales a preparar (incluyendo acompañantes)</div>
+      <div class="food-grid">
         <div class="food-item"><div class="food-count" id="food-carne">0</div><div class="food-lbl">Carne</div></div>
         <div class="food-item"><div class="food-count" id="food-pollo">0</div><div class="food-lbl">Pollo</div></div>
         <div class="food-item"><div class="food-count" id="food-pescado">0</div><div class="food-lbl">Pescado</div></div>
@@ -213,217 +197,298 @@ tr:hover td{background:var(--cream);}
       <div class="table-title">Lista de invitados</div>
       <input class="search-box" type="text" id="searchInput" placeholder="Buscar por nombre…" oninput="filterTable()">
     </div>
-    <div id="loadingState">Ingresa el URL de tu Google Sheet para cargar los datos<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
+    <div class="loading-msg" id="loadingMsg">
+      Cargando datos<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+    </div>
     <table id="guestTable" style="display:none;">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>WhatsApp</th>
-          <th>Asistencia</th>
-          <th>Acomp.</th>
-          <th>Menú</th>
-          <th>Alergia</th>
-          <th>Canción</th>
-          <th>Mensaje</th>
-          <th>Fecha</th>
+          <th>#</th><th>Nombre</th><th>WhatsApp</th><th>Asistencia</th>
+          <th>Acomp.</th><th>Menú</th><th>Alergia</th><th>Canción</th><th>Mensaje</th><th>Fecha</th>
         </tr>
       </thead>
       <tbody id="guestTbody"></tbody>
     </table>
-    <div id="emptyState" class="empty-msg" style="display:none;">No se encontraron respuestas aún.</div>
+    <div class="empty-msg" id="emptyMsg" style="display:none;">Aún no hay respuestas registradas.</div>
   </div>
 
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+  <div class="footer-row">
     <button class="export-btn" onclick="exportCSV()">↓ Exportar CSV</button>
     <div class="last-updated" id="lastUpdated"></div>
   </div>
 
-</div>
+</div><!-- /main -->
 
 <script>
-var allRows = [];
-var sheetCsvUrl = localStorage.getItem('weddingSheetUrl') || '';
+/* ════════════════════════════════════════════════════
+   CONFIGURACIÓN — solo editar esta sección
+   ════════════════════════════════════════════════════ */
+var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrq1JbAvBT2TUSkq8LH4LpIw1LoLrSQ9sIt8YaMB3RK6ecEWR0nr34va3apHP-CTrEo2-EUg_UrbFh/pub?gid=38827500&single=true&output=csv';
+var REFRESH_INTERVAL_SEC = 60; /* actualización automática en segundos */
+/* ════════════════════════════════════════════════════ */
 
-/* Restore saved URL */
-if(sheetCsvUrl) document.getElementById('sheetUrl').value = sheetCsvUrl;
+var allCleanRows = [];
+var colMap = {};
 
-function saveAndLoad(){
-  sheetCsvUrl = document.getElementById('sheetUrl').value.trim();
-  if(!sheetCsvUrl){alert('Por favor ingresa el URL del Google Sheet.');return;}
-  localStorage.setItem('weddingSheetUrl', sheetCsvUrl);
-  loadData();
-}
-
-function loadData(){
-  if(!sheetCsvUrl){
-    document.getElementById('loadingState').innerHTML='Ingresa el URL de tu Google Sheet arriba y haz clic en "Cargar datos".';
-    return;
+/* ── CSV tokenizer (maneja comillas, comas y saltos dentro de campos) ── */
+function tokenizeLine(line){
+  var fields=[], cur='', inQ=false;
+  for(var i=0;i<line.length;i++){
+    var c=line[i];
+    if(inQ){
+      if(c==='"'&&line[i+1]==='"'){cur+='"';i++;}
+      else if(c==='"'){inQ=false;}
+      else cur+=c;
+    } else {
+      if(c==='"'){inQ=true;}
+      else if(c===','){fields.push(cur.trim());cur='';}
+      else cur+=c;
+    }
   }
-  document.getElementById('loadingState').style.display='block';
-  document.getElementById('loadingState').innerHTML='Cargando datos<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
-  document.getElementById('guestTable').style.display='none';
-  document.getElementById('emptyState').style.display='none';
-
-  /* Use a CORS proxy to fetch the public CSV */
-  var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent(sheetCsvUrl);
-  fetch(url)
-    .then(function(r){return r.json();})
-    .then(function(data){
-      var csv = data.contents;
-      parseAndRender(csv);
-    })
-    .catch(function(err){
-      document.getElementById('loadingState').innerHTML='Error al cargar los datos. Verifica que el Sheet esté publicado y el URL sea correcto.';
-      console.error(err);
-    });
+  fields.push(cur.trim());
+  return fields;
 }
 
+/* ── Limpia HTML que el proxy pueda inyectar ── */
+function stripHtml(s){
+  return s.replace(/<[^>]*>/g,'')
+          .replace(/&amp;/g,'&').replace(/&lt;/g,'<')
+          .replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
+          .replace(/&#39;/g,"'").replace(/&quot;/g,'"')
+          .trim();
+}
+
+/* ── Detecta tildes → ascii para comparaciones ── */
+function norm(s){
+  return (s||'').toLowerCase()
+    .replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i')
+    .replace(/ó/g,'o').replace(/ú/g,'u').replace(/ñ/g,'n');
+}
+
+/* ── Parsea el CSV completo ── */
 function parseCSV(csv){
-  var lines = csv.trim().split('\n');
-  var headers = lines[0].split(',').map(function(h){return h.trim().replace(/"/g,'');});
-  var rows = [];
-  for(var i=1;i<lines.length;i++){
-    var cols = lines[i].match(/(".*?"|[^",\n]+)(?=,|\n|$)/g)||[];
-    var row = {};
-    headers.forEach(function(h,j){
-      row[h] = (cols[j]||'').replace(/^"|"$/g,'').trim();
+  var lines = csv.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+
+  /* Encuentra la fila de encabezados: primera con ≥2 celdas de texto real */
+  var headerIdx = 0;
+  for(var i=0;i<Math.min(lines.length,30);i++){
+    var cells = tokenizeLine(lines[i]).map(stripHtml);
+    var textCells = cells.filter(function(c){
+      return c.length>1 && isNaN(Number(c)) && !/^[\{\.<]/.test(c);
     });
+    if(textCells.length >= 2){ headerIdx=i; break; }
+  }
+
+  var headers = tokenizeLine(lines[headerIdx]).map(stripHtml);
+
+  var rows = [];
+  for(var i=headerIdx+1;i<lines.length;i++){
+    var line=lines[i].trim();
+    if(!line) continue;
+    var cols=tokenizeLine(line).map(stripHtml);
+    /* Saltar filas con ruido HTML/CSS */
+    if(/^[\{\.<]/.test(cols[0]||'')) continue;
+    if(cols.filter(function(c){return c.length>0;}).length<1) continue;
+    var row={};
+    headers.forEach(function(h,j){ row[h]=cols[j]||''; });
     rows.push(row);
   }
   return {headers:headers, rows:rows};
 }
 
-function parseAndRender(csv){
-  var parsed = parseCSV(csv);
-  allRows = parsed.rows;
+/* ── Detecta automáticamente qué columna es qué ── */
+function detectCols(headers){
+  function find(keywords){
+    return headers.find(function(h){
+      var hn=norm(h);
+      return keywords.some(function(k){ return hn.includes(norm(k)); });
+    }) || '';
+  }
+  return {
+    timestamp:  find(['marca temporal','timestamp','fecha de']),
+    nombre:     find(['nombre completo','nombre','name']),
+    telefono:   find(['whatsapp','telefono','teléfono','phone','tel']),
+    asistencia: find(['asistir','asistencia','¿asistir','attend']),
+    acomp:      find(['acompanante','acompañante','acomp','personas']),
+    menu:       find(['menu','menú','preferencia de','comida','food']),
+    alergia:    find(['alergi','restriccion','restricción','diet']),
+    cancion:    find(['cancion','canción','song','favorita']),
+    mensaje:    find(['mensaje','message','novios','nota']),
+  };
+}
 
-  /* Try to auto-detect columns */
-  var colMap = autoDetectCols(parsed.headers);
+/* ── Carga y renderiza ── */
+function loadData(){
+  var btn=document.getElementById('refreshBtn');
+  btn.disabled=true; btn.textContent='Cargando…';
+  setStatus('Conectando…','');
 
-  /* Stats */
-  var total=allRows.length, yes=0, no=0, guests=0;
-  var menu={carne:0,pollo:0,pescado:0,vegetariano:0};
-  var foodTotal={carne:0,pollo:0,pescado:0,vegetariano:0,alergia:0};
+  /* allorigins.win como proxy CORS gratuito */
+  var proxyUrl='https://api.allorigins.win/get?url='+encodeURIComponent(SHEET_CSV_URL);
 
-  allRows.forEach(function(r){
-    var asist = (r[colMap.asistencia]||'').toLowerCase();
-    var isYes = asist.includes('sí') || asist.includes('si') || asist.includes('yes');
-    if(isYes){ yes++;
-      var ac = parseInt(r[colMap.acomp]||'0')||0;
-      guests += 1+ac;
-      var m = (r[colMap.menu]||'').toLowerCase();
-      if(m.includes('carne')){menu.carne++;foodTotal.carne+=1+ac;}
-      else if(m.includes('pollo')){menu.pollo++;foodTotal.pollo+=1+ac;}
-      else if(m.includes('pescado')){menu.pescado++;foodTotal.pescado+=1+ac;}
-      else if(m.includes('veg')){menu.vegetariano++;foodTotal.vegetariano+=1+ac;}
-      if(r[colMap.alergia] && r[colMap.alergia].length>2) foodTotal.alergia++;
+  fetch(proxyUrl)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var csv=data.contents||'';
+      if(!csv){ throw new Error('Respuesta vacía del proxy'); }
+      render(csv);
+      setStatus('● Conectado','ok');
+      document.getElementById('lastUpdated').textContent=
+        'Actualizado: '+new Date().toLocaleTimeString('es-GT');
+    })
+    .catch(function(err){
+      setStatus('✕ Error de conexión','err');
+      document.getElementById('loadingMsg').textContent=
+        'No se pudieron cargar los datos. Verifica tu conexión o que el Sheet esté publicado.';
+      console.error(err);
+    })
+    .finally(function(){
+      btn.disabled=false; btn.textContent='↻ Actualizar';
+    });
+}
+
+function render(csv){
+  var parsed=parseCSV(csv);
+  colMap=detectCols(parsed.headers);
+
+  /* Filas válidas: deben tener nombre */
+  allCleanRows=parsed.rows.filter(function(r){
+    return (r[colMap.nombre]||'').trim().length>=2;
+  });
+
+  /* ── Stats ── */
+  var total=0,yes=0,no=0,guests=0;
+  var menu={carne:0,pollo:0,pescado:0,veg:0};
+  var platos={carne:0,pollo:0,pescado:0,veg:0,alergia:0};
+
+  allCleanRows.forEach(function(r){
+    total++;
+    var asist=norm(r[colMap.asistencia]||'');
+    var isYes=asist.includes('si asiste')||asist.includes('con mucho gusto')||
+              (asist.includes('si')&&!asist.includes('no'));
+    var ac=Math.max(0,parseInt(r[colMap.acomp])||0);
+
+    if(isYes){
+      yes++;
+      guests+=1+ac;
+      var m=norm(r[colMap.menu]||'');
+      if(m.includes('carne')){   menu.carne++;  platos.carne+=1+ac;}
+      else if(m.includes('pollo')){menu.pollo++; platos.pollo+=1+ac;}
+      else if(m.includes('pescado')){menu.pescado++;platos.pescado+=1+ac;}
+      else if(m.includes('veg')){ menu.veg++;   platos.veg+=1+ac;}
+      if((r[colMap.alergia]||'').trim().length>2) platos.alergia++;
     } else { no++; }
   });
 
-  /* Update stats */
+  /* ── Actualizar números ── */
   document.getElementById('statTotal').textContent=total;
   document.getElementById('statYes').textContent=yes;
   document.getElementById('statNo').textContent=no;
   document.getElementById('statGuests').textContent=guests;
 
-  /* Update charts */
-  var maxMenu=Math.max(menu.carne,menu.pollo,menu.pescado,menu.vegetariano,1);
-  ['carne','pollo','pescado'].forEach(function(k){
-    document.getElementById('bar-'+k).style.width=Math.round(menu[k]/maxMenu*100)+'%';
-    document.getElementById('cnt-'+k).textContent=menu[k];
-  });
-  document.getElementById('bar-veg').style.width=Math.round(menu.vegetariano/maxMenu*100)+'%';
-  document.getElementById('cnt-veg').textContent=menu.vegetariano;
+  /* ── Barras de menú ── */
+  var maxM=Math.max(menu.carne,menu.pollo,menu.pescado,menu.veg,1);
+  [['carne',menu.carne],['pollo',menu.pollo],['pescado',menu.pescado],['veg',menu.veg]]
+    .forEach(function(pair){
+      document.getElementById('bar-'+pair[0]).style.width=Math.round(pair[1]/maxM*100)+'%';
+      document.getElementById('cnt-'+pair[0]).textContent=pair[1];
+    });
 
-  document.getElementById('food-carne').textContent=foodTotal.carne;
-  document.getElementById('food-pollo').textContent=foodTotal.pollo;
-  document.getElementById('food-pescado').textContent=foodTotal.pescado;
-  document.getElementById('food-veg').textContent=foodTotal.vegetariano;
-  document.getElementById('food-alergia').textContent=foodTotal.alergia;
+  /* ── Totales platos ── */
+  document.getElementById('food-carne').textContent=platos.carne;
+  document.getElementById('food-pollo').textContent=platos.pollo;
+  document.getElementById('food-pescado').textContent=platos.pescado;
+  document.getElementById('food-veg').textContent=platos.veg;
+  document.getElementById('food-alergia').textContent=platos.alergia;
 
-  /* Render table */
-  renderTable(allRows, colMap);
-  document.getElementById('loadingState').style.display='none';
-  document.getElementById('lastUpdated').textContent='Actualizado: '+new Date().toLocaleTimeString('es-GT');
+  /* ── Tabla ── */
+  renderTable(allCleanRows);
+
+  /* ── Debug ── */
+  document.getElementById('debugPanel').innerHTML=
+    '<strong>Encabezados detectados ('+parsed.headers.length+'):</strong> '+
+    parsed.headers.map(function(h){return '<em>'+h+'</em>';}).join(' · ')+'<br>'+
+    '<strong>Mapeo de columnas:</strong> '+
+    Object.entries(colMap).map(function(e){return e[0]+' → <em>'+(e[1]||'—')+'</em>';}).join(' · ')+'<br>'+
+    '<strong>Filas CSV totales:</strong> '+parsed.rows.length+
+    ' &nbsp;|&nbsp; <strong>Filas válidas:</strong> '+allCleanRows.length;
 }
 
-function autoDetectCols(headers){
-  function find(keywords){
-    var h=headers.find(function(h){return keywords.some(function(k){return h.toLowerCase().includes(k);});});
-    return h||'';
-  }
-  return {
-    timestamp: find(['timestamp','fecha','time']),
-    nombre: find(['nombre','name']),
-    telefono: find(['tel','phone','whatsapp']),
-    asistencia: find(['asist','attend']),
-    acomp: find(['acomp','compañ','guest']),
-    menu: find(['men','food','comid']),
-    alergia: find(['alergi','restrict','diet']),
-    cancion: find(['canci','song','música']),
-    mensaje: find(['mensaje','message','nota']),
-  };
-}
-
-function renderTable(rows, colMap){
+/* ── Tabla ── */
+function renderTable(rows){
   var tbody=document.getElementById('guestTbody');
   tbody.innerHTML='';
+  document.getElementById('loadingMsg').style.display='none';
+
   if(!rows.length){
     document.getElementById('guestTable').style.display='none';
-    document.getElementById('emptyState').style.display='block';
+    document.getElementById('emptyMsg').style.display='block';
     return;
   }
   document.getElementById('guestTable').style.display='table';
-  document.getElementById('emptyState').style.display='none';
+  document.getElementById('emptyMsg').style.display='none';
 
   rows.forEach(function(r,i){
-    var asist=(r[colMap.asistencia]||'').toLowerCase();
-    var isYes=asist.includes('sí')||asist.includes('si')||asist.includes('yes');
+    var asist=norm(r[colMap.asistencia]||'');
+    var isYes=asist.includes('si asiste')||asist.includes('con mucho gusto')||
+              (asist.includes('si')&&!asist.includes('no'));
+    var alerg=(r[colMap.alergia]||'').trim();
+    var msg=(r[colMap.mensaje]||'').trim();
     var tr=document.createElement('tr');
+    tr.setAttribute('data-search',norm(r[colMap.nombre]||'')+' '+norm(r[colMap.telefono]||''));
     tr.innerHTML=
       '<td>'+(i+1)+'</td>'+
       '<td><strong>'+(r[colMap.nombre]||'—')+'</strong></td>'+
       '<td>'+(r[colMap.telefono]||'—')+'</td>'+
-      '<td><span class="status '+(isYes?'yes':'no')+'">'+(isYes?'✓ Asiste':'✗ No asiste')+'</span></td>'+
+      '<td><span class="status-pill '+(isYes?'yes':'no')+'">'+(isYes?'✓ Asiste':'✗ No asiste')+'</span></td>'+
       '<td style="text-align:center">'+(r[colMap.acomp]||'0')+'</td>'+
       '<td>'+(r[colMap.menu]||'—')+'</td>'+
-      '<td>'+(r[colMap.alergia]||'—')+'</td>'+
+      '<td>'+(alerg.length>1?'<span class="alerg-warn">⚠ '+alerg+'</span>':'—')+'</td>'+
       '<td>'+(r[colMap.cancion]||'—')+'</td>'+
-      '<td>'+(r[colMap.mensaje]||'—')+'</td>'+
+      '<td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+msg+'">'+
+        (msg||'—')+'</td>'+
       '<td style="white-space:nowrap;font-size:11px;color:#9AAFC5">'+(r[colMap.timestamp]||'—')+'</td>';
     tbody.appendChild(tr);
   });
 }
 
+/* ── Búsqueda ── */
 function filterTable(){
-  var q=document.getElementById('searchInput').value.toLowerCase();
-  var rows=document.getElementById('guestTbody').querySelectorAll('tr');
-  rows.forEach(function(tr){
-    tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none';
+  var q=norm(document.getElementById('searchInput').value);
+  document.getElementById('guestTbody').querySelectorAll('tr').forEach(function(tr){
+    tr.style.display=(tr.getAttribute('data-search')||'').includes(q)?'':'none';
   });
 }
 
+/* ── Exportar CSV ── */
 function exportCSV(){
-  if(!allRows.length){alert('No hay datos para exportar.');return;}
-  var keys=Object.keys(allRows[0]);
+  if(!allCleanRows.length){alert('No hay datos para exportar.');return;}
+  var keys=Object.keys(allCleanRows[0]);
   var csv=keys.join(',')+'\n';
-  allRows.forEach(function(r){
+  allCleanRows.forEach(function(r){
     csv+=keys.map(function(k){return '"'+(r[k]||'').replace(/"/g,'""')+'"';}).join(',')+'\n';
   });
-  var blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
-  var link=document.createElement('a');
-  link.href=URL.createObjectURL(blob);
-  link.download='rsvp_boda_kimberly_lenin.csv';
-  link.click();
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}));
+  a.download='rsvp_boda_kimberly_lenin_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
 }
 
-/* Auto-refresh every 60 seconds */
-setInterval(function(){if(sheetCsvUrl)loadData();},60000);
+/* ── Debug toggle ── */
+function toggleDebug(){
+  var p=document.getElementById('debugPanel');
+  p.style.display=p.style.display==='block'?'none':'block';
+}
 
-/* Initial load if URL saved */
-if(sheetCsvUrl) loadData();
+/* ── Estado de conexión ── */
+function setStatus(msg,cls){
+  var el=document.getElementById('connStatus');
+  el.textContent=msg; el.className='nav-status'+(cls?' '+cls:'');
+}
+
+/* ── Arranque ── */
+loadData();
+setInterval(loadData, REFRESH_INTERVAL_SEC*1000);
 </script>
-
 </body>
 </html>
