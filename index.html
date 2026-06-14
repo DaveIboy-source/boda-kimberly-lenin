@@ -12,15 +12,16 @@
      2. Copia el action URL del form aquí:
      ══════════════════════════════════════ -->
 <script>
-  const SHEETS_URL = "https://docs.google.com/forms/d/e/TU_FORM_ID_AQUI/formResponse";
-  const FIELD_NOMBRE    = "entry.000000001";
-  const FIELD_TELEFONO  = "entry.000000002";
-  const FIELD_ASISTENCIA= "entry.000000003";
-  const FIELD_ACOMP     = "entry.000000004";
-  const FIELD_MENU      = "entry.000000005";
-  const FIELD_ALERGIA   = "entry.000000006";
-  const FIELD_CANCION   = "entry.000000007";
-  const FIELD_MENSAJE   = "entry.000000008";
+  // ⚠️ REEMPLAZA ESTE URL con el tuyo (ver instrucciones en README Paso 2c)
+  const SHEETS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfS13jeiC9tCu8Vs7X8IV7nrcukSqTjGxh7GUZRLmdqCR8cOQ/formResponse"
+  const FIELD_NOMBRE    = "entry.2098440524";
+  const FIELD_TELEFONO  = "entry.150767810";
+  const FIELD_ASISTENCIA= "entry.1398453287";
+  const FIELD_ACOMP     = "entry.726181537";
+  const FIELD_MENU      = "entry.2104875345";
+  const FIELD_ALERGIA   = "entry.2032202079";
+  const FIELD_CANCION   = "entry.143032130";
+  const FIELD_MENSAJE   = "entry.1630188965";
 </script>
 
 <style>
@@ -397,6 +398,11 @@ body{
   <!-- Agrega aquí el archivo de Photograph o un link legal -->
   <!-- <source src="photograph.mp3" type="audio/mpeg"> -->
   <!-- Para usar YouTube Audio o Soundcloud, reemplaza con el embed -->
+<iframe id="ytAudio" 
+  src="https://www.youtube.com/embed/Ay1yeK6RJUE?autoplay=0&loop=1&playlist=Ay1yeK6RJUE&enablejsapi=1" 
+  style="display:none" 
+  allow="autoplay">
+</iframe>
 </audio>
 <button id="musicBtn" onclick="toggleMusic()" title="Música">♪</button>
 
@@ -420,7 +426,7 @@ body{
     <div class="env-body"></div>
     <div class="env-flap"></div>
     <div class="env-card">Abrir invitación ✦</div>
-    <div class="env-seal">KL</div>
+    <div class="env-seal">K&L</div>
   </div>
 
   <p class="env-hint">Toca para abrir</p>
@@ -525,11 +531,8 @@ body{
     <div class="timeline">
       <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">2:00 pm</div><div class="tl-info"><div class="tl-name">Ceremonia Civil</div><div class="tl-detail">Club Mariscal — Salón principal</div></div></div>
       <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">3:00 pm</div><div class="tl-info"><div class="tl-name">Ceremonia Religiosa</div><div class="tl-detail">Bendición nupcial — mismo recinto</div></div></div>
-      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">4:30 pm</div><div class="tl-info"><div class="tl-name">Cóctel de bienvenida</div><div class="tl-detail">Terraza exterior</div></div></div>
-      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">5:00 pm</div><div class="tl-info"><div class="tl-name">Entrada de los novios</div><div class="tl-detail">Salón de recepción</div></div></div>
-      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">6:00 pm</div><div class="tl-info"><div class="tl-name">Cena</div><div class="tl-detail">Menú de gala</div></div></div>
-      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">8:00 pm</div><div class="tl-info"><div class="tl-name">Baile y Fiesta</div><div class="tl-detail">Pista de baile abierta</div></div></div>
-      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">11:00 pm</div><div class="tl-info"><div class="tl-name">Hora loca</div><div class="tl-detail">¡La pista se enciende!</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">4:00 pm</div><div class="tl-info"><div class="tl-name">convivencia</div><div class="tl-detail">Menú de gala</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">4:30:00 pm</div><div class="tl-info"><div class="tl-name">Baile y Fiesta</div><div class="tl-detail">Pista de baile abierta</div></div></div>
     </div>
   </div>
 
@@ -552,7 +555,7 @@ body{
       <div class="gift-card"><div class="gift-emoji">🛋</div><div class="gift-name">Sala</div><div class="gift-desc">Decoración, cojines, plantas de hogar</div></div>
       <div class="gift-card"><div class="gift-emoji">💛</div><div class="gift-name">Aporte libre</div><div class="gift-desc">Cualquier contribución con cariño</div></div>
     </div>
-    <p class="gift-footer">Para coordinar un regalo, contáctanos directamente por WhatsApp.</p>
+    <p class="gift-footer">Sin compromiso — con todo nuestro amor</p>
   </div>
 
   <!-- RSVP -->
