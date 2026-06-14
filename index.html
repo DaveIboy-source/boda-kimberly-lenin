@@ -13,7 +13,7 @@
      ══════════════════════════════════════ -->
 <script>
   // ⚠️ REEMPLAZA ESTE URL con el tuyo (ver instrucciones en README Paso 2c)
-  const SHEETS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfS13jeiC9tCu8Vs7X8IV7nrcukSqTjGxh7GUZRLmdqCR8cOQ/formResponse"
+  const SHEETS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSf-PEGA_TU_URL_AQUI/formResponse"
   const FIELD_NOMBRE    = "entry.2098440524";
   const FIELD_TELEFONO  = "entry.150767810";
   const FIELD_ASISTENCIA= "entry.1398453287";
@@ -22,6 +22,22 @@
   const FIELD_ALERGIA   = "entry.2032202079";
   const FIELD_CANCION   = "entry.143032130";
   const FIELD_MENSAJE   = "entry.1630188965";
+
+  /* ══════════════════════════════════════════════
+     IMÁGENES — cambia los URLs para personalizar
+     Puedes usar links de Google Drive, Dropbox,
+     o cualquier URL pública de imagen
+     ══════════════════════════════════════════════ */
+  const FOTOS = {
+    /* Foto principal de los novios (hero de la invitación) */
+    heroes: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=480&q=80',
+
+    /* Fondo de la sección de fecha */
+    fondoFecha: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=480&q=60',
+
+    /* Fondo de la sección del versículo */
+    fondoVersiculo: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=480&q=60',
+  };
 </script>
 
 <style>
@@ -394,18 +410,8 @@ body{
 <body>
 
 <!-- ══ MUSIC ══════════════════════════════════════ -->
-<audio id="bgMusic" loop preload="none">
-  <!-- Agrega aquí el archivo de Photograph o un link legal -->
-<!--src="https://www.youtube.com/watch?v=fQWhenQgXo8&list=RDfQWhenQgXo8&start_radio=1"-->
-  <!-- <source src="photograph.mp3" type="audio/mpeg"> -->
-  <!-- Para usar YouTube Audio o Soundcloud, reemplaza con el embed -->
-<iframe id="ytAudio" 
-     src="https://www.youtube.com/nSDgHBxUbVQ?list=RDlp-EO5I60KA"
-     <source src="photograph.mp3" type="audio/mpeg">
-  style="display:none" 
-  allow="autoplay">
-</iframe>
-</audio>
+<!-- MUSIC: YouTube IFrame API -->
+<div id="ytPlayer" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;top:-9999px;"></div>
 <button id="musicBtn" onclick="toggleMusic()" title="Música">♪</button>
 
 <!-- ══ ENVELOPE SCREEN ════════════════════════════ -->
@@ -428,7 +434,7 @@ body{
     <div class="env-body"></div>
     <div class="env-flap"></div>
     <div class="env-card">Abrir invitación ✦</div>
-    <div class="env-seal">K&L</div>
+    <div class="env-seal">KL</div>
   </div>
 
   <p class="env-hint">Toca para abrir</p>
@@ -440,7 +446,7 @@ body{
   <!-- HERO -->
   <div class="hero">
     <!-- PHOTO: Reemplaza el src con la foto real de los novios -->
-    <img class="hero-photo" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=480&q=80" alt="Kimberly y Lenin">
+    <img class="hero-photo" id="heroPhoto" src="" alt="Kimberly y Lenin">
     <div class="hero-overlay"></div>
     <div class="hero-mono">KL</div>
     <div class="hero-content">
@@ -473,7 +479,7 @@ body{
   </div>
 
   <!-- DATE -->
-  <div class="date-block anim">
+  <div class="date-block anim" id="secFecha" style="background-size:cover;background-position:center;">
     <p class="lbl">Fecha de la boda</p>
     <p class="date-big">4 de Julio</p>
     <p class="date-sub">Sábado, 2026</p>
@@ -521,7 +527,7 @@ body{
   </div>
 
   <!-- VERSE -->
-  <div class="verse-section anim">
+  <div class="verse-section anim" id="secVersiculo" style="background-size:cover;background-position:center;">
     <p class="verse-text">"Más valen dos que uno, porque obtienen más fruto de su esfuerzo.<br>Si caen, el uno levanta al otro."</p>
     <p class="verse-ref">Eclesiastés 4:9–10</p>
   </div>
@@ -533,8 +539,11 @@ body{
     <div class="timeline">
       <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">2:00 pm</div><div class="tl-info"><div class="tl-name">Ceremonia Civil</div><div class="tl-detail">Club Mariscal — Salón principal</div></div></div>
       <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">3:00 pm</div><div class="tl-info"><div class="tl-name">Ceremonia Religiosa</div><div class="tl-detail">Bendición nupcial — mismo recinto</div></div></div>
-      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">4:00 pm</div><div class="tl-info"><div class="tl-name">convivencia</div><div class="tl-detail">Menú de gala</div></div></div>
-      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">4:30:00 pm</div><div class="tl-info"><div class="tl-name">Baile y Fiesta</div><div class="tl-detail">Pista de baile abierta</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">4:30 pm</div><div class="tl-info"><div class="tl-name">Cóctel de bienvenida</div><div class="tl-detail">Terraza exterior</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">5:00 pm</div><div class="tl-info"><div class="tl-name">Entrada de los novios</div><div class="tl-detail">Salón de recepción</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">6:00 pm</div><div class="tl-info"><div class="tl-name">Cena</div><div class="tl-detail">Menú de gala</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">8:00 pm</div><div class="tl-info"><div class="tl-name">Baile y Fiesta</div><div class="tl-detail">Pista de baile abierta</div></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-time">11:00 pm</div><div class="tl-info"><div class="tl-name">Hora loca</div><div class="tl-detail">¡La pista se enciende!</div></div></div>
     </div>
   </div>
 
@@ -557,7 +566,7 @@ body{
       <div class="gift-card"><div class="gift-emoji">🛋</div><div class="gift-name">Sala</div><div class="gift-desc">Decoración, cojines, plantas de hogar</div></div>
       <div class="gift-card"><div class="gift-emoji">💛</div><div class="gift-name">Aporte libre</div><div class="gift-desc">Cualquier contribución con cariño</div></div>
     </div>
-    <p class="gift-footer">Sin compromiso — con todo nuestro amor</p>
+    <p class="gift-footer">Para coordinar un regalo, contáctanos directamente por WhatsApp.</p>
   </div>
 
   <!-- RSVP -->
@@ -622,45 +631,51 @@ function showInvitation(){
   env.classList.add('hidden');
   setTimeout(function(){
     env.style.display='none';
-    document.getElementById('invitation').style.display='block';
+    var inv = document.getElementById('invitation');
+    inv.style.display='block';
+    /* Aplicar imágenes desde CONFIG */
+    document.getElementById('heroPhoto').src = FOTOS.heroes;
+    if(FOTOS.fondoFecha){
+      var fd = document.getElementById('secFecha');
+      if(fd) fd.style.backgroundImage = 'url('+FOTOS.fondoFecha+')';
+    }
+    if(FOTOS.fondoVersiculo){
+      var fv = document.getElementById('secVersiculo');
+      if(fv) fv.style.backgroundImage = 'url('+FOTOS.fondoVersiculo+')';
+    }
     startCountdown();
     initAnimations();
     tryAutoplay();
   },500);
 }
 
-/* ── MUSIC ────────────────────────── */
-var musicPlaying = false;
-var audio = document.getElementById('bgMusic');
-
+/* Music handled by YouTube IFrame API */
+var VIDEO_ID = '2Vv-BfVoq4g';
+var ytPlayer, ytReady=false, musicPlaying=false, pendingPlay=false;
+function onYouTubeIframeAPIReady(){
+  ytPlayer=new YT.Player('ytPlayer',{
+    videoId:VIDEO_ID,
+    playerVars:{autoplay:0,controls:0,loop:1,playlist:VIDEO_ID},
+    events:{onReady:function(){ytReady=true;if(pendingPlay){ytPlayer.setVolume(40);ytPlayer.playVideo();musicPlaying=true;updateMusicBtn();}}}
+  });
+}
 function tryAutoplay(){
-  /* Try to play after user interaction (envelope click) */
-  audio.volume = 0.35;
-  var p = audio.play();
-  if(p !== undefined){
-    p.then(function(){
-      musicPlaying=true;
-      document.getElementById('musicBtn').textContent='♫';
-      document.getElementById('musicBtn').classList.add('playing');
-    }).catch(function(){
-      /* autoplay blocked — user can click button */
-    });
-  }
+  if(ytReady){ytPlayer.setVolume(40);ytPlayer.playVideo();musicPlaying=true;updateMusicBtn();}
+  else{pendingPlay=true;}
 }
 function toggleMusic(){
-  if(musicPlaying){
-    audio.pause();
-    musicPlaying=false;
-    document.getElementById('musicBtn').textContent='♪';
-    document.getElementById('musicBtn').classList.remove('playing');
-  } else {
-    audio.play();
-    musicPlaying=true;
-    document.getElementById('musicBtn').textContent='♫';
-    document.getElementById('musicBtn').classList.add('playing');
-  }
+  if(!ytReady){pendingPlay=!pendingPlay;updateMusicBtn();return;}
+  if(musicPlaying){ytPlayer.pauseVideo();musicPlaying=false;}
+  else{ytPlayer.setVolume(40);ytPlayer.playVideo();musicPlaying=true;}
+  updateMusicBtn();
 }
-
+function updateMusicBtn(){
+  var b=document.getElementById('musicBtn');
+  b.textContent=musicPlaying?'\u266b':'\u266a';
+  musicPlaying?b.classList.add('playing'):b.classList.remove('playing');
+}
+/* Load YouTube API */
+(function(){var t=document.createElement('script');t.src='https://www.youtube.com/iframe_api';document.head.appendChild(t);})();
 /* ── COUNTDOWN ───────────────────── */
 function startCountdown(){
   var target = new Date('2026-07-04T14:00:00');
