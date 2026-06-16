@@ -119,8 +119,7 @@ body{
   0%,100%{box-shadow:0 4px 20px rgba(0,0,0,0.2);}
   50%{box-shadow:0 4px 30px rgba(201,168,76,0.5);}
 }
-
-/* ── PANTALLA SOBRE ──────────────────────────────────── */
+/* ── PANTALLA SOBRE ──────────────────────────────────── 
 #envelope-screen{
   position:fixed;inset:0;z-index:1000;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -128,7 +127,7 @@ body{
 }
 #envelope-screen.hidden{opacity:0;transform:scale(1.04);pointer-events:none;}
 
-/* Texturas de fondo (se aplican por JS) */
+/* Texturas de fondo (se aplican por JS) 
 .textura-lino{
   background-color:#EEF2F6;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EEF2F6'/%3E%3Crect width='1' height='4' fill='%23D8DFE6' opacity='0.5'/%3E%3Crect width='4' height='1' fill='%23D8DFE6' opacity='0.3'/%3E%3C/svg%3E");
@@ -188,7 +187,7 @@ body{
   color:var(--texto);opacity:0.45;margin-bottom:36px;
 }
 
-/* El sobre */
+/* El sobre 
 .env-wrap{
   position:relative;width:min(280px,72vw);
   aspect-ratio:1.6/1;cursor:pointer;
@@ -246,7 +245,7 @@ body{
   text-transform:uppercase;color:var(--acento);
   animation:pulse 2s infinite;
 }
-@keyframes pulse{0%,100%{opacity:0.45;}50%{opacity:1;}}
+@keyframes pulse{0%,100%{opacity:0.45;}50%{opacity:1;}} -->> */
 
 /* ── INVITACIÓN ──────────────────────────────────────── */
 #invitation{display:none;}
